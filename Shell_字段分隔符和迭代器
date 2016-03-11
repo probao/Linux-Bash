@@ -1,0 +1,32 @@
+IFS的介绍
+Shell 脚本中有个变量叫IFS(Internal Field Seprator) ，内部域分隔符。完整定义是The shell uses the value stored in IFS, which is the space, tab, and newline characters by default, to delimit words for the read and set commands, when parsing output from command substitution, and when performing variable substitution.
+Shell 的环境变量分为set, env 两种，其中 set 变量可以通过 export 工具导入到 env 变量中。其中，set 是显示设置shell变量，仅在本 shell 中有效；env 是显示设置用户环境变量 ，仅在当前会话中有效。换句话说，set 变量里包含了env 变量，但set变量不一定都是env 变量。这两种变量不同之处在于变量的作用域不同。显然，env 变量的作用域要大些，它可以在 subshell 中使用。
+IFS 是一种 set 变量，当 shell 处理"命令替换"和"参数替换"时，shell 根据 IFS 的值，默认是 space, tab, newline 来拆解读入的变量，然后对特殊字符进行处理，最后重新组合赋值给该变量。
+
+#!/bin/bash
+
+data="name,sex,rollno,location"
+oldIFS=$IFS;           #保存原始值
+IFS=","		       #改变IFS的值
+for item in $data;
+do
+echo Item:$item
+done
+IFS=$oldIFS	       #还原IFS的原始值
+
+
+#!/bin/bash
+
+line="root:x:0:0:root:/root:/bin/bash"
+oldIFS=$IFS;
+IFS=":"
+count=0
+for item in $line;
+do
+
+[ $count -eq 0 ] && user=$item;
+[ $count -eq 6 ] && shell=$item;
+let count++
+done;
+IFS=$oldIFS
+echo $user\'s shell is $shell;  #\转义字符
