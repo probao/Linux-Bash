@@ -1,0 +1,53 @@
+比较与逻辑
+
+if条件：
+if condition；
+then
+commands；
+fi
+
+else if和else
+if condition；
+then
+commands；
+else if condition；
+then
+	commands
+else
+	commands
+fi
+
+[ condition ] && action; #如果condition为真，则执行action
+[ condition ] || action; #如果condition为假，则执行action
+
+$$是逻辑与运算符
+||是逻辑或运算符
+
+#!/bin/bash
+
+a=1;
+if [ $a -eq  0 ];
+        then
+        echo "good";
+        else
+        echo "no";
+fi
+
+输出结果：no
+
+-gt：大于
+-lt：小于
+-ge：大于或等于
+-le：小于或等于
+
+[ $var1 -ne 0 -a $var2 -gt 2 ] #使用逻辑与-a
+[ $var -ne 0 -o var2 -gt 2] #逻辑或-o
+
+文件系统相关测试
+-f 如果给定的变量包含正常的文件路径或文件名，则返回真。
+-x 如果给定的变量包含的文件可执行，则返回真。
+LINUX_SHELL脚本攻略p49
+
+
+
+
