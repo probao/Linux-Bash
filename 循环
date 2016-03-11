@@ -1,0 +1,36 @@
+for循环
+for var in list
+do
+	commands；
+done
+list can be a string，or a sequence
+
+for循环也可以采用C语言中for循环的格式
+for((i=0;i<10;i++))
+{
+	commands;
+}
+
+
+while循环
+while condition
+do
+commands；
+done
+用true作为循环条件能够产生无限循环
+
+
+until循环
+until condition
+do
+commands；
+done
+
+#!/bin/bash
+
+x=0;
+until [$x -eq 9]
+do
+	let x++; #;不一定要
+	echo $x;
+done
