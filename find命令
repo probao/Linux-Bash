@@ -29,3 +29,7 @@ $ find . ! -name "*.txt" -print #! 匹配所有不以.txt结尾的文件名
 ./next.jpg
 ./test.py
 ./new.py
+
+3.基于目录深度的搜索
+-maxdepth参数指定最大深度  #当前目录为1
+-mindepth参数指定最小深度
