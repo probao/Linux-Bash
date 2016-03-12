@@ -1,0 +1,31 @@
+find命令
+
+find命令的工作方式：沿着文件层次结构向下遍历，匹配符合条件的文件，并执行相应的操作。
+find 命令的一般形式为； 
+find pathname -options [-print -exec -ok ...] 
+
+1.根据文件名或正则表达式匹配搜索
+$ls
+example.txt Example.txt file.txt
+$ find . -iname "example*" -print  #-iname 匹配名字，无视大小写
+./example.txt
+./Example.txt
+
+
+$ls
+new.txt some.jpg text.pdf
+$ find . \( -name "*.txt" -o -name "*.pdf" \) -print    #注意空格 find命令将两类文件看为一个整体
+./text.pdf
+./new.txt
+
+$ find ~ -path "*slynux*" -print  # -name总是用给定的文件名进行匹配，-path则将文件路径作为一个整体进行匹配。
+
+
+2. 否定参数
+$ ls 
+list.txt new.py new.txt next.jpg test.py
+
+$ find . ! -name "*.txt" -print #! 匹配所有不以.txt结尾的文件名
+./next.jpg
+./test.py
+./new.py
