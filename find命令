@@ -33,3 +33,39 @@ $ find . ! -name "*.txt" -print #! 匹配所有不以.txt结尾的文件名
 3.基于目录深度的搜索
 -maxdepth参数指定最大深度  #当前目录为1
 -mindepth参数指定最小深度
+
+4.根据文件类型搜索
+
+b - 块设备文件。
+d - 目录。
+c - 字符设备文件。
+p - 管道文件。
+l - 符号链接文件。
+f - 普通文件。
+
+find . -type f -print
+
+
+5. 根据文件时间进行搜索
+-atime：用户最近一次访问文件的时间
+-mtime：文件内容最后一次被修改的时间
+-ctime：文件元数据（metadata，例如权限或所有权）最后一次改变的时间
+
+time #单位是天
+
+find . -type f -atime -7 -print  #打印出在最近七天内被访问过的所有文件
+find . -type f -atime 7 -print  #打印出恰好在七天前被访问过的所有文件
+find . -type f -atime +7 -print #打印出访问时间超过七天的所有文件
+
+-amin #单位是分钟
+-mmin
+-cmin
+
+-newer #我们可以指定一个用于比较时间戳的参考文件，然后找出比参考文件更新的（更长的修改时间）所有文件
+find . -type f -newer file.txt -print
+
+
+
+
+
+
