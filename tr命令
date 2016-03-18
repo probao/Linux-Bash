@@ -1,0 +1,47 @@
+tr命令
+tr只能通过stdin（标准输入），而无法通过命令行参数来接受输入。它的调用格式如下：
+tr [options] set1 set2
+
+$ echo "HELLO WHO IS THIS" | tr 'A-Z' 'a-z'
+$ hello who is this
+
+$ echo 87654 | tr '9876543210' '0-9'
+$ 12345
+
+用tr将制表符换成空格
+cat text | tr '\t' ' '
+
+用tr删除字符
+$ echo "Hello 123 world 456" | tr -d '0-9'
+$ Hello world
+
+用tr选择字符集补集
+$ echo "hello 1 char 2 next 4" | tr -d -c '0-9 \n'
+1 2 4
+
+用tr压缩
+tr -s '\n'  #压缩空白行 删除行
+$ echo "GNU is   not   UNIX." | tr -s ' '  #压缩空格
+$ GNU is not UNIX.
+
+
+用tr将文件中的数字列表进行相加
+$ cat sum.txt
+1
+2
+3
+4
+5
+$ cat sum.txt | echo $[$(tr '\n' '+') 0]  # $命令 $[ operation ]执行算术运算
+15
+
+用tr替换字符
+alnum：字母和数字
+alpha：字母
+lower：小写字母
+upper：大写字母
+space：空白字符
+ tr '[:lower:]' '[:upper:]'
+
+
+file contents here
