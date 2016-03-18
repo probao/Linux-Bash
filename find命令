@@ -64,7 +64,20 @@ find . -type f -atime +7 -print #打印出访问时间超过七天的所有文�
 -newer #我们可以指定一个用于比较时间戳的参考文件，然后找出比参考文件更新的（更长的修改时间）所有文件
 find . -type f -newer file.txt -print
 
+6.基于文件大小的搜索
 
+find . -type f -size +2k #大于2kb的文件 -2 小于2kb的文件 2 等于2kb的文件
+ 
+b--块（512字节）
+c--字节
+w--字（2字节）
+k--千字节
+M--兆字节
+G--吉字节
+
+
+7. 删除匹配的文件
+find . -type f -name "*.swp" -delete
 
 
 
