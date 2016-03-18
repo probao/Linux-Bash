@@ -1,0 +1,32 @@
+xargs命令
+xargs是一个很有用的命令，它擅长将标准输入数据转换成命令行参数
+
+例子
+将多行输入转换成单行输出
+$ cat example.txt
+1 2 3
+4 5
+
+$ cat example.txt | xargs
+1 2 3 4 5
+
+将单行输入转换成多行输出
+$ cat 1.txt
+1
+2 ert 3
+4 asd
+5
+
+$ cat 1.txt | xargs -n 2 # -n 每行有n个参数
+1 2
+ert 3
+4 asd
+5
+
+
+$ echo "splitXsplitXsplitXsplit" | xargs -d X # 指定X作为输入定界符，xargs采用内部字段分隔符（IFS）作为输入定界符
+$ split split split split
+
+$ echo "splitXsplitXsplitXsplit" | xargs -d X -n 2
+split split
+split split
