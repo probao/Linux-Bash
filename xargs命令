@@ -30,3 +30,21 @@ $ split split split split
 $ echo "splitXsplitXsplitXsplit" | xargs -d X -n 2
 split split
 split split
+
+cecho.sh
+#! /bin/bash
+
+echo $* '#'
+
+$ cat args.txt | xargs -I { } ./cecho.sh -p { } -l #-I指定一个替换字符串，这个字符串在xargs扩展时会被替换掉。当-I与xargs结合使用时，对于每一个参数，命令都会被执行一次。
+-p arg1 -l 
+
+find与xargs结合
+$ find . -type f -name "*.txt" -print0 | xargs -0 rm -f # -print0以字符null作为定界符
+
+
+结合stdin，运用while和子shell
+$ cat files.txt | (while read arg; do cat $arg; done )
+#等同于 cat files.txt | xargs -I {} cat {}
+
+
