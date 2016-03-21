@@ -191,5 +191,124 @@ sohu 100 4500
 
 http://www.cnblogs.com/51linux/archive/2012/05/23/2515299.html
 
+二，uniq参数说明
+用法：uniq [选项]... [文件]  
+从输入文件或者标准输入中筛选相邻的匹配行并写入到输出文件或标准输出。  
+  
+不附加任何选项时匹配行将在首次出现处被合并。  
+  
+长选项必须使用的参数对于短选项时也是必需使用的。  
+ -c, --count              //在每行前加上表示相应行目出现次数的前缀编号  
+ -d, --repeated          //只输出重复的行  
+ -D, --all-repeated      //只输出重复的行，不过有几行输出几行  
+ -f, --skip-fields=N     //-f 忽略的段数，-f 1 忽略第一段  
+ -i, --ignore-case       //不区分大小写  
+ -s, --skip-chars=N      //根-f有点像，不过-s是忽略，后面多少个字符 -s 5就忽略后面5个字符  
+ -u, --unique            //去除重复的后，全部显示出来，根mysql的distinct功能上有点像  
+ -z, --zero-terminated   end lines with 0 byte, not newline  
+ -w, --check-chars=N      //对每行第N 个字符以后的内容不作对照  
+ --help              //显示此帮助信息并退出  
+ --version              //显示版本信息并退出 
 
+whwu@master:~/script> cat uniqtest.txt
+this is a test
+this is a test
+this is a test
+i am tank
+i love tank
+i love tank
+this is a test
+whom have a try
+whoM have a try
+you have a try
+i want to abroad
+those are good man
+we are good man
+
+whwu@master:~/script> uniq -c uniqtest.txt  #uniq的一个特性，检查重复行的时候，只会检查相邻的行。
+      3 this is a test
+      1 i am tank
+      2 i love tank
+      1 this is a test
+      1 whom have a try
+      1 whoM have a try
+      1 you have a try
+      1 i want to abroad
+      1 those are good man
+      1 we are good man
+
+whwu@master:~/script> sort uniqtest.txt | uniq -c  # uniq只会对相邻行进行排序
+      1 i am tank
+      2 i love tank
+      1 i want to abroad
+      4 this is a test
+      1 those are good man
+      1 we are good man
+      1 whom have a try
+      1 whoM have a try
+      1 you have a try
+
+whwu@master:~/script> sort uniqtest.txt | uniq -c -d  #-d显示重复的行
+      2 i love tank
+      4 this is a test
+
+
+whwu@master:~/script> sort uniqtest.txt | uniq  -D  #-D将重复的行都显示出来
+i love tank
+i love tank
+this is a test
+this is a test
+this is a test
+this is a test
+
+whwu@master:~/script> sort uniqtest.txt | uniq -c -f 1 #those只有一行，但是由于-f 1意味忽略第一个域，从第二个域开始。
+      1 i am tank
+      2 i love tank
+      1 i want to abroad
+      4 this is a test
+      2 those are good man
+      3 whom have a try
+
+whwu@master:~/script> uniq -s 3 -c uniqtest.txt   #-s 忽略前3个字符
+      3 this is a test
+      1 i am tank
+      2 i love tank
+      1 this is a test
+      1 whom have a try
+      1 whoM have a try
+      1 you have a try
+      1 i want to abroad
+      1 those are good man
+      1 we are good man
+whwu@master:~/script> uniq -s 4 -c uniqtest.txt #-s 4忽略前4个字符 因此whom与whoM不考虑
+      3 this is a test
+      1 i am tank
+      2 i love tank
+      1 this is a test
+      2 whom have a try
+      1 you have a try
+      1 i want to abroad
+      1 those are good man
+      1 we are good man
+
+whwu@master:~/script> uniq -w 1 -c uniqtest.txt #-w 1只比较第一个字符
+      3 this is a test
+      3 i am tank
+      1 this is a test
+      2 whom have a try
+      1 you have a try
+      1 i want to abroad
+      1 those are good man
+      1 we are good man
+whwu@master:~/script> uniq -w 2 -c uniqtest.txt #-w 2只比较前两个字符
+      3 this is a test
+      3 i am tank
+      1 this is a test
+      2 whom have a try
+      1 you have a try
+      1 i want to abroad
+      1 those are good man
+      1 we are good man
+
+http://blog.51yip.com/shell/1022.html
 
