@@ -312,3 +312,23 @@ whwu@master:~/script> uniq -w 2 -c uniqtest.txt #-w 2只比较前两个字符
 
 http://blog.51yip.com/shell/1022.html
 
+#! /bin/bash
+# count_letters
+
+ sed 's/[^.]/&\n/g' $1 | # [^.]--匹配文件中所有非.的字符  &--保存搜索字符用来替换其他字符 整句含义在每个字符后添加换行符
+ sed '/^$/d' |		 # ^$--空行 d--删除 
+        sort | 
+	uniq -c | 
+	tr -d ' \n' > new.txt # 删除空格和换行符
+	
+cat 1.txt
+apple
+
+./count_letters
+cat new.txt
+1a1e1l2p
+
+	
+	
+	
+	
