@@ -29,7 +29,7 @@ options
 -V或--version：显示版本信息
 
 
-sed命令
+sed元字符集
 ^ 匹配行开始，如：/^sed/匹配所有以sed开头的行。
 $ 匹配行结束，如：/sed$/匹配所有以sed结尾的行。
 . 匹配一个非换行符的任意字符，如：/s.d/匹配s后接一个任意字符，最后是d。
@@ -43,6 +43,116 @@ $ 匹配行结束，如：/sed$/匹配所有以sed结尾的行。
 x\{m\} 重复字符x，m次，如：/0\{5\}/匹配包含5个0的行。
 x\{m,\} 重复字符x，至少m次，如：/0\{5,\}/匹配至少有5个0的行。
 x\{m,n\} 重复字符x，至少m次，不多于n次，如：/0\{5,10\}/匹配5~10个0的行。
+
+sed命令
+
+a\ 在当前行下面插入文本。
+i\ 在当前行上面插入文本。
+c\ 把选定的行改为新的文本。
+d 删除，删除选择的行。
+D 删除模板块的第一行。
+s 替换指定字符
+h 拷贝模板块的内容到内存中的缓冲区。
+H 追加模板块的内容到内存中的缓冲区。
+g 获得内存缓冲区的内容，并替代当前模板块中的文本。
+G 获得内存缓冲区的内容，并追加到当前模板块文本的后面。
+l 列表不能打印字符的清单。
+n 读取下一个输入行，用下一个命令处理新的行而不是用第一个命令。
+N 追加下一个输入行到模板块后面并在二者间嵌入一个新行，改变当前行号码。
+p 打印模板块的行。
+P(大写) 打印模板块的第一行。
+q 退出Sed。
+b lable 分支到脚本中带有标记的地方，如果分支不存在则分支到脚本的末尾。
+r file 从file中读行。
+t label if分支，从最后一行开始，条件一旦满足或者T，t命令，将导致分支到带有标号的命令处，或者到脚本的末尾。
+T label 错误分支，从最后一行开始，一旦发生错误或者T，t命令，将导致分支到带有标号的命令处，或者到脚本的末尾。
+w file 写并追加模板块到file末尾。  
+W file 写并追加模板块的第一行到file末尾。  
+! 表示后面的命令对所有没有被选定的行发生作用。  
+= 打印当前行号码。  
+# 把注释扩展到下一个换行符以前。  
+
+
+
+
+
+whwu@master:~/script> cat 3.txt
+bookgoogle
+baidu book
+guge
+sohu
+i love shell book
+
+whwu@master:~/script> sed -n 's/book/BOOK/p' 3.txt # -n选项和p命令一起使用表示只打印那些发生替换的行
+BOOKgoogle
+baidu BOOK
+i love shell BOOK
+
+
+whwu@master:~/script> sed 's/book/books/g' 3.txt #替换文件中每一个book
+
+
+######删除操作：d命令#######
+whwu@master:~/script> cat 3.txt
+bookgoogle
+
+
+baidu book
+
+guge
+sohu
+
+
+
+i love shell book
+
+whwu@master:~/script> sed '/^$/d' 3.txt  #删除空行
+bookgoogle
+baidu book
+guge
+sohu
+
+whwu@master:~/script> sed '2d' 3.txt    #删除第二行
+whwu@master:~/script> sed '3,$d' 3.txt  #删除第三至最后一行
+whwu@master:~/script> sed '$d' 3.txt    #删除最后一行
+whwu@master:~/script> sed '/^book/d' 3.txt  #删除以book开始的行
+
+
+######已匹配字符串标记&#######
+whwu@master:~/script> cat 3.txt
+book google
+baidu book
+guge
+sohu
+i love shell book
+
+whwu@master:~/script> sed 's/\w\+/[&]/g' 3.txt         # 正则表达式 \w\+ 匹配每一个单词，使用 [&] 替换它，& 对应于之前所匹配到的单词
+[book] [google]
+[baidu] [book]
+[guge]
+[sohu]
+[i] [love] [shell] [book]
+
+whwu@master:~/script> sed 's/^book/&ha ha/' 3.txt      # 所有以book开头的行都会被替换成它自已加ha ha
+bookha ha google
+baidu book
+guge
+sohu
+i love shell book
+
+
+
+######子串匹配标记\1#######
+whwu@master:~/script> echo aaa BBB | sed 's/\([a-z]\)/\1     /'      #\(..\) 用于匹配子串，对于匹配到的第一个子串就标记为 \1， \([a-z]\)匹配第一个小写字母 
+a     aa BBB
+whwu@master:~/script> echo aaa BBB | sed 's/\([a-z]\) \([A-Z]\)/\2 \1/'     #\([a-z]\) \([A-Z]\)匹配a B,其中a的子串标记是\1,B的子串标记是\2
+aaB aBB
+whwu@master:~/script> echo aaa BBB | sed 's/\([a-z]\+\) \([A-Z]\+\)/\2 \1/'  #\([a-z]\+\) 匹配第一个由小写字母组成的单词
+BBB aaa
+
+
+#######引用#######
+sed表达式可以使用单引号来引用，但是如果表达式内部包含变量字符串，就需要使用双引号。
 
 
 
