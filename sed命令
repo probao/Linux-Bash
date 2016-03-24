@@ -257,3 +257,46 @@ baidu book
 guge
 sohu apple
 i lovae shell book pear
+
+
+#########变形：y命令##########
+whwu@master:~/script> cat 3.txt
+book google
+baidu book
+guogeo
+sohu apple
+i lovae shell book apple
+whwu@master:~/script> sed '2,4y/o/O/' 3.txt  # y表示把一个字符翻译为另外的字符（但是不用于正则表达式），将把2~4行内所有abcde转变为大写
+book google
+baidu bOOk
+guOgeO
+sOhu apple
+i lovae shell book apple
+
+#########高阶应用#########
+whwu@master:~/script> cat 4.txt
+1
+2
+foo
+3
+4
+5
+foo
+6
+7
+8
+
+whwu@master:~/script> sed -n 'H;/foo/{h};${x;p}' 4.txt 
+foo
+6
+7
+8
+H把每行的内容都追加进hold space，当匹配到foo时，h是拷贝进缓冲区，
+那等于说是把之前追加的内容都清空了，用foo覆盖之前的所有内容，那匹
+配到最后一个foo的时候肯定就覆盖了之前的所有追加的内容了，直到文件
+最后，x交换出hold space里的内容，然后打印。
+
+相关网页：http://czmmiao.iteye.com/blog/1899880 http://blog.chinaunix.net/uid-10540984-id-2894287.html
+
+
+
