@@ -1,0 +1,9 @@
+awk例子
+whwu@master:~/script> cat new.txt
+a 1 2 3
+b 2 3 4
+c 5 6 7
+whwu@master:~/script> awk '{print $0,$2+$3,$3/$4}' new.txt
+a 1 2 3 3 0.666667
+b 2 3 4 5 0.75
+c 5 6 7 11 0.857143
