@@ -8,9 +8,24 @@ baidu bookxixi
 guogeo
 sohu apple
 i lovae shell book apple
+bok
 
-whwu@master:~/script> grep '^s' 3.txt	#  ^匹配行开始, '^s'匹配以s开头的行
+
+whwu@master:~/script> grep '^s' 3.txt       #  ^匹配行开始, '^s'匹配以s开头的行
 sohu apple
 
-whwu@master:~/script> grep 'xi$' 3.txt	#  $匹配行结束，如：/xi$/匹配所有以xi结尾的行。
+whwu@master:~/script> grep 'xi$' 3.txt	    # $匹配行结束，如：/xi$/匹配所有以xi结尾的行。
 baidu bookxixi
+
+whwu@master:~/script> grep 'b.k' 3.txt      # . 匹配一个非换行符的任意字符，如：/b.k/匹配b后接一个任意字符，最后是k
+bok
+
+whwu@master:~/script> grep 'b*k' 3.txt      # * 匹配0个或多个字符，如：/b*k/匹配所有模板是b后接任意个字符，最后是k
+booka google
+baidu bookxixi
+i lovae shell book apple
+bok
+
+whwu@master:~/script> grep '[Ss]ohu' 3.txt  # [] 匹配一个指定范围内的字符，如/[Ss]ohu/匹配含有Sohu和sohu的行。
+sohu apple
+Sohu
