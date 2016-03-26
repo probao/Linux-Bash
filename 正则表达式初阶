@@ -44,3 +44,59 @@ whwu@master:~/script> grep '[^c]ook' 3.txt # [^] 匹配一个不在指定范围�
 booka google
 baidu bookxixi
 i lovae shell book apple
+
+whwu@master:~/script> sed 's/\(coo\)k/\1haha/' 3.txt    #\(..\) 匹配子串，保存匹配的字符，如coohaha替换cook
+booka google
+coohaha
+baidu bookxixi
+guogeo
+sohu apple
+Sohu
+i lovae shell book apple
+bok
+whwu@master:~/script>
+
+whwu@master:~/script> sed 's/cook/***&***/' 3.txt        # & 保存搜索字符用来替换其他字符，如s/cook/***&***/，love这成***cook***。
+booka google
+***cook***
+baidu bookxixi
+guogeo
+sohu apple
+Sohu
+i lovae shell book apple
+bok
+
+whwu@master:~/script> grep '\<boo' 3.txt   # 匹配含以boo开头的单词的行
+booka google
+baidu bookxixi
+i lovae shell book apple
+whwu@master:~/script> grep '\<book\>' 3.txt    # 仅仅匹配含book的单词的行
+i lovae shell book apple
+whwu@master:~/script> grep 'book\>' 3.txt	 # 匹配含以book结尾的单词的行
+i lovae shell book apple
+whwu@master:~/script>
+
+
+
+whwu@master:~/script> cat 4.txt
+100
+1000
+10000
+100000
+10
+10000000000
+
+whwu@master:~/script> grep '0\{5\}' 4.txt  # x\{m\} 重复字符x，m次，/0\{5\}/匹配包含5个0的行，/0\{5,\}/匹配至少有5个0的行
+100000
+10000000000
+
+whwu@master:~/script> grep '0\{3,4\}' 4.txt  # x\{m,n\} 重复字符x，至少m次，不多于n次，如：/0\{5,10\}/匹配5~10个0的行。
+1000
+10000
+100000
+10000000000
+
+
+
+
+
