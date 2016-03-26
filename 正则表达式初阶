@@ -29,3 +29,18 @@ bok
 whwu@master:~/script> grep '[Ss]ohu' 3.txt  # [] 匹配一个指定范围内的字符，如/[Ss]ohu/匹配含有Sohu和sohu的行。
 sohu apple
 Sohu
+
+
+whwu@master:~/script> cat 3.txt
+booka google
+cook
+baidu bookxixi
+guogeo
+sohu apple
+Sohu
+i lovae shell book apple
+bok
+whwu@master:~/script> grep '[^c]ook' 3.txt # [^] 匹配一个不在指定范围内的字符，如：/[^c]ook/匹配不包含c一个字母开头，紧跟ook的行
+booka google
+baidu bookxixi
+i lovae shell book apple
