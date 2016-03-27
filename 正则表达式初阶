@@ -96,6 +96,25 @@ whwu@master:~/script> grep '0\{3,4\}' 4.txt  # x\{m,n\} 重复字符x，至少m�
 100000
 10000000000
 
+whwu@master:~/script> egrep "cook(aab)?" 3.txt #匹配cook 以及cookaab
+cook
+cookab
+cookaab
+
+whwu@master:~/script> cat 3.txt
+booka google
+cook
+cookab
+cookaab
+baidu bookxixi
+guogeo
+sohu apple
+Sohu
+i lovae shell book apple
+bok
+whwu@master:~/script> egrep 'cooka+' 3.txt   #匹配cooka 以及后面加任意字母
+cookab
+cookaab
 
 
 
