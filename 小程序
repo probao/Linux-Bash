@@ -1,0 +1,29 @@
+计算1+2+...+100
+#!/bin/bash
+#sum1.sh
+
+total=0;   
+num=0;
+while((num<=100));
+do
+        total=` expr $total + $num `   #expr在循环中用于增量计算,注意空格
+        num=` expr $num + 1 `
+done
+
+echo "$total"
+
+
+范例：有一组数据，存有某村所有家庭的人数和月总收入，找出人均月收入最高家庭
+#!/bin/bash
+# gettopfamily.sh
+
+[ $# -lt 1 ] && echo "please input the income file" && exit -1
+[ ! -f $1 ] && echo "$1 is not a file" && exit -1
+
+income=$1
+awk '{
+        printf("%d %0.2f\n", $1, $3/$2);
+}' $income | sort -k 2 -n -r
+
+
+
