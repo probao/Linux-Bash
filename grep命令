@@ -1,0 +1,74 @@
+grep命令
+grep命令是UNIX中用于文本搜索的大师级工具。
+
+
+从stdin中读取：
+whwu@master:~> echo -e "this is a word\nhaha"
+this is a word
+haha
+whwu@master:~> echo -e "this is a word\nhaha" | grep word
+this is a word
+
+
+whwu@master:~/script> echo this is a line. | egrep -o "[a-z]+\."  #egrep 可以用于正则表达式，-o 表示只打印匹配到的内容[a-z]+表示任意长度的字母，\为转译符，表示以.结尾的字母串
+line.
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book book
+i lovae shell book apple
+whwu@master:~/script> egrep -o "book" 1.txt   # -o 表示只打印匹配到的内容
+book
+book
+book
+book
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book
+i lovae shell book apple
+whwu@master:~/script> grep -v "google" 1.txt  # -v invert 打印不匹配的行
+baidu book
+i lovae shell book apple
+
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book book
+i lovae shell book apple
+whwu@master:~/script> egrep -c "book" 1.txt  # -c 统计匹配的行数
+3
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book book
+i lovae shell book apple
+whwu@master:~/script> egrep -o "book" 1.txt | wc -l   #统计所匹配内容的个数
+4
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book book
+i lovae shell book apple
+whwu@master:~/script> egrep -n "google" 1.txt  # -n 打印出包含匹配字符串的行数
+1:book google
+
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book book
+i lovae shell book apple
+whwu@master:~/script> grep -b -o "book" 1.txt  # 打印样式匹配所位于的字符或字节偏移
+0:book
+18:book
+23:book
+42:book
+
+
+
+
+
+
+
+
+
