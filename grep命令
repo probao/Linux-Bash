@@ -64,7 +64,11 @@ whwu@master:~/script> grep -b -o "book" 1.txt  # 打印样式匹配所位于的�
 23:book
 42:book
 
-
+whwu@master:~/script> grep "google" . -R -n   #递归搜索 搜索整个当前文件夹
+./1.txt:1:book google
+./new:1:google 110 5000
+./3.txt:1:booka google
+./facebook.txt:1:       google 110 5000
 
 
 
