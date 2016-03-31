@@ -26,4 +26,37 @@ awk '{
 }' $income | sort -k 2 -n -r
 
 
+aaa 12 1 
+aaa 12 2 
+aaa 12 4 
+aaa 15 1
+aaa 15 2
+bbb 12 1
+bbb 12 2
+最后我想得出的输出结果为
+aaa  12  7
+aaa  15  3
+bbb  12  3
+
+#!/usr/bin/awk -f	#表示以下语句的解释器为awk，-f 表示，awk脚本运行时需要跟一个文件名参数（awk一般就是用于文本处理的）。
+NR == 1 { col1 = $1; col2 = $2; col3 = $3; }	#NR==1 行数为1 之后赋值 注意空格	
+NR > 1 {        
+	if($1 == col1 && $2 == col2)                
+	col3+=$3;				# col3+$3=$3
+else        
+	{                   
+	print(col1" "col2" "col3);               
+	col1 = $1; col2 = $2; col3 = $3;        
+	}   
+}
+END { print(col1" "col2" "col3); }
+
+
+NR小例子
+whwu@master:~/script> echo -e "A B C\nD E F\nG H I" | awk 'NR==1 {print $1}' # Number 0f Row（NR）
+A
+
+
+
+
 
