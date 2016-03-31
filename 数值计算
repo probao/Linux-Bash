@@ -1,0 +1,19 @@
+整数运算
+
+范例：对某个数加 1
+$ i=0;
+$ ((i++))
+$ echo $i
+1
+
+$ let i++
+$ echo $i
+2
+
+$ expr $i + 1    #注意空格
+3
+$ echo $i
+2
+
+$ echo $i 1 | awk '{printf $1+$2}'
+3
