@@ -7,3 +7,31 @@ whwu@master:~/script> awk '{print $0,$2+$3,$3/$4}' new.txt
 a 1 2 3 3 0.666667
 b 2 3 4 5 0.75
 c 5 6 7 11 0.857143
+
+awk命令
+awk脚本的机构基本如下所示：
+awk ' BEGIN{ print "start" } pattern {command} END {print "end" } file
+这三个模块都是可选的，最重要的部分就是pattern语句块中的通用命令。这个语句块同样是可选的。
+如果不提供该语句块，则默认执行{ print }，即打印每一个读取到的行。awk对于读取的每一行，都
+会执行这个语句块。这就像一个用来读取行的while循环，在循环体中提供了相应的语句。每读取一行
+时，它就会检查该行和提供的样式是否匹配。样式本身可以是正则表达式、条件以及行匹配范围。如果
+匹配该样式，则执行{ }中的语句。
+
+whwu@master:~/script> cat  /etc/passwd | head -5 > pl   #将前5行打印
+whwu@master:~/script> cat pl
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+
+whwu@master:~/script> awk -F: '$3 == 0 {print $1}' pl  # -F: 意思是以:为分隔符  $3==0 第三个参数是否为0 是0就打印第一个参数。
+root
+
+whwu@master:~/script> awk -F: '$3 != 0 {print $1}' pl
+bin
+daemon
+adm
+lp
+
+
