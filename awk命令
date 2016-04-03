@@ -68,3 +68,42 @@ i lovae shell book apple
 whwu@master:~/script> awk 'END{ print NR }' 1.txt   #打印文件的行数
 3
 
+whwu@master:~/script> seq 5 | awk 'BEGIN { sum=0;print "summation" } {print $1"+"; sum+=$1} END {print "==="; print sum}'  # sum+=$1 意思是sum=sum+$1
+summation
+1+
+2+
+3+
+4+
+5+
+===
+15
+
+将外部变量值传递给awk
+whwu@master:~/script> VAR=100
+whwu@master:~/script> echo | awk -v VARIABLE=$VAR '{ print VARIABLE }'
+100
+
+whwu@master:~/script> var1="variable1"; var2="variable2"
+whwu@master:~/script> echo | awk '{ print v1,v2 }' v1=$var1 v2=$var2
+variable1 variable2
+
+用样式对awk处理的行进行过滤
+whwu@master:~/script> cat facebook.txt
+        google 110 5000
+baidu 100 5000
+guge 50 3000
+        sohu 100 4500
+whwu@master:~/script> awk 'NR<3' facebook.txt     #打印行号小于三的行
+        google 110 5000
+baidu 100 5000
+
+whwu@master:~/script> awk '/u/' facebook.txt      #打印含u的行
+baidu 100 5000
+guge 50 3000
+        sohu 100 4500
+whwu@master:~/script> awk '!/u/' facebook.txt     #打印不含u的行
+        google 110 5000
+
+
+
+
