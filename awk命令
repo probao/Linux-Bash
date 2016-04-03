@@ -34,4 +34,37 @@ daemon
 adm
 lp
 
+一些特殊变量
+NR：表示记录数量（number of records），在执行过程中对应于当前行号。
+NF：表示记录字段数量（number of fields），在执行过程中对应于当前行的字段数。
+$0：这个变量包含执行过程中当前行的文本内容。
+$1：这个变量包含第一个字段的文本内容。
+$2：这个变量包含第二个字段的文本内容。
+当print的参数是以逗号进行分隔时，参数打印时则以空格作为定界符；在awk的print语句中，双引号
+是被当做拼接操作符使用的。
+
+
+whwu@master:~/script> echo -e "line1 f2 f3\nlin2 f4 f5\nline3 f6 f7" |                     
+		      awk '{print "Line no:"NR",No of fields:"NF, "$0="$0,"$1="$1,"$2="$2,"$3="$3}'   
+Line no:1,No of fields:3 $0=line1 f2 f3 $1=line1 $2=f2 $3=f3
+Line no:2,No of fields:3 $0=lin2 f4 f5 $1=lin2 $2=f4 $3=f5
+Line no:3,No of fields:3 $0=line3 f6 f7 $1=line3 $2=f6 $3=f7
+
+
+awk的一些简单用法
+whwu@master:~/script> cat 1.txt                   #打印每一行的第二个和第三个字段
+book google
+baidu book book
+i lovae shell book apple
+whwu@master:~/script> awk '{ print $2,$3 }' 1.txt
+google
+book book
+lovae shell
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book book
+i lovae shell book apple
+whwu@master:~/script> awk 'END{ print NR }' 1.txt   #打印文件的行数
+3
 
