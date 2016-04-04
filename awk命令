@@ -127,3 +127,41 @@ whwu@master:~/script> awk -F: '{print $NF}' new    #NF表示每段字段个数�
 /bin/bash
 
 
+awk的例子
+whwu@master:~/script> cat 4.txt
+100
+1000
+10000
+
+
+100000
+10
+10000000000
+
+1
+
+12
+123
+1234
+whwu@master:~/script> awk '/^$/ {print NR,"blank line"}' 4.txt   # /^$/匹配空行 NR表示行数 ，表示输出时为空格 ""表示打印字段。先匹配再打印
+4 blank line
+5 blank line
+9 blank line
+11 blank line
+whwu@master:~/script> cat awk.sh  #可以先写一个脚本
+/^$/ {print NR,"blank line"}
+whwu@master:~/script> awk -f awk.sh 4.txt #提前编辑一个awk脚本再通过-f选项调用该脚本。
+4 blank line
+5 blank line
+9 blank line
+11 blank line
+whwu@master:~/script> cat awk1.sh   将awk命令也编译入脚本
+#!/usr/bin/awk -f
+
+/^$/ {print NR,"blank line"}
+
+whwu@master:~/script> ./awk1.sh 4.txt
+4 blank line
+5 blank line
+9 blank line
+11 blank line
