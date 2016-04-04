@@ -106,4 +106,24 @@ whwu@master:~/script> awk '!/u/' facebook.txt     #打印不含u的行
 
 
 
+设置字段定界符-F
+whwu@master:~/script> cat new
+jones:x:516:516:Adrian W. Jones/OSD211/555-0123:/home/vfung:/bin/bash
+dorothy:x:517:517:Dorothy Gale/KNS321/555-0044:/home/nmehio:/bin/bash
+toto:x:518:518:Toto Gale/KNS322/555-0045:/home/mmicklich:/bin/bash
+ben:x:519:519:Ben Franklin/OSD212/555-0022:/home/whwu:/bin/bash\
+betsy:x:520:520:Betsy Ross/BMD17/555-0095:/home/ysong:/bin/bash
+whwu@master:~/script> awk -F: '{print NF}' new     #NF表示每行字段个数
+7
+7
+7
+7
+7
+whwu@master:~/script> awk -F: '{print $NF}' new    #NF表示每段字段个数为7 $7就表示最后一个字段
+/bin/bash
+/bin/bash
+/bin/bash
+/bin/bash\
+/bin/bash
+
 
