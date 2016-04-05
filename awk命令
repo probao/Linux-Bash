@@ -125,6 +125,9 @@ whwu@master:~/script> awk -F: '{print $NF}' new    #NF表示每段字段个数�
 /bin/bash
 /bin/bash\
 /bin/bash
+whwu@master:~/script> echo 'hell the:world,!' | awk 'BEGIN {FS="[:, ]"} {print $1,$2,$3,$4}'  #指定多个字段分隔符(文档内容为：hello the:word,!)
+hell the world !
+
 
 
 awk的例子
