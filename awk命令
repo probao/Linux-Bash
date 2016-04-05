@@ -168,3 +168,187 @@ whwu@master:~/script> ./awk1.sh 4.txt
 5 blank line
 9 blank line
 11 blank line
+
+
+
+内置变量
+    以下为awk内置变量：
+          ARGC        命令行参数个数
+          FILENAME    当前输入文档的名称
+          FNR        当前输入文档的当前记录编号，尤其当有多个输入文档时有用
+          NR        输入流的当前记录编号
+          NF        当前记录的字段个数
+          FS        字段分隔符
+          OFS        输出字段分隔符，默认为空格
+          ORS        输出记录分隔符，默认为换行符\n
+           RS        输入记录分隔符，默认为换行符\n
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book book
+i lovae shell book apple
+whwu@master:~/script> cat 2.txt
+1 2 6
+2 3 9
+3 4 12
+4 5 15
+whwu@master:~/script> awk '{print FNR}' 1.txt 2.txt   # FNR当前输入文档的当前记录编号
+1
+2
+3
+1
+2
+3
+4
+whwu@master:~/script> awk '{print NR}' 1.txt 2.txt     # NR输入流的当前记录编号
+1
+2
+3
+4
+5
+6
+7
+
+whwu@master:~/script> awk '{print NF}' 1.txt	      # NF当前记录的字段个数 
+2
+3
+5
+whwu@master:~/script> awk 'BEGIN{OFS="-"}{print $1,$2}' 1.txt		#OFS        输出字段分隔符
+book-google
+baidu-book
+i-lovae
+
+whwu@master:~/script> cat 6.txt
+mail from: tomcat@gmail.com
+subject:hello
+data:2012-07-12 17:0
+content:Hello, The world.
+
+mail from: jerry@gmail.com
+subject:congregation
+data:2012-07-12 08:31
+content:Congregation to you.
+
+mail from: jacob@gmail.com
+subject:Test
+data:2012-07-12 10:20
+content:This is a test mail.
+whwu@master:~/script> awk 'BEGIN {RS="" ; FS="\n"}{print $3 }' 6.txt    #RS将段落分隔符设置为空行，将字段分隔符设置为换行符，
+data:2012-07-12 17:0
+data:2012-07-12 08:31
+data:2012-07-12 10:20
+
+
+
+4. 表达式与操作符
+    表达式是由变量、常量、函数、正则表达式、操作符组成，awk中变量有字符变量和数字变量。如果在awk中定义的变量没有初始化，则初始值为空字串或0。
+    注意：字符操作时一定记得需要加引号
+    1) 变量定义示例：
+        a="welcome to beijing"
+         b=12
+     2) 操作符(awk操作符与C语言类似)
+      +        加
+   -        减
+   *        乘
+   /        除
+   %        取余
+   ^        幂运算
+   ++        自加1
+    --        自减1
+    +=        相加后赋值给变量(x+=9等同于x=x+9)
+    -=        相减后赋值给变量(x-=9等同于x=x-9)
+    *=        相乘后赋值给变量(x*=9等同于x=x*9)
+    /=        相除后赋值给变量(x/=9等同于x=x/9)
+    >        大于
+   <        小于
+   >=        大于等于
+   <=        小于等于
+   ==        等于
+   !=        不等于
+   ~        匹配
+   !~        不匹配
+   &&        与
+   ||        或
+
+whwu@master:~/script> echo "test" | awk 'x=2 {print x+3}'
+5
+whwu@master:~/script> echo "test" | awk ' {print x+3}'   #没有赋值x默认为0
+3
+
+
+whwu@master:~/script> cat 6.txt
+mail from: tomcat@gmail.com
+subject:hello
+
+
+data:2012-07-12 17:0
+content:Hello, The world.
+
+mail from: jerry@gmail.com
+subject:congregation
+
+data:2012-07-12 08:31
+
+content:Congregation to you.
+
+mail from: jacob@gmail.com
+subject:Test
+data:2012-07-12 10:20
+content:This is a test mail.
+whwu@master:~/script> awk '/^$/ {print x+=1}' 6.txt		 #统计所有空白行
+1
+2
+3
+4
+5
+whwu@master:~/script> awk '/^$/ {x+=1} END{print x}' 6.txt	 #打印总空白行个数
+5
+
+
+awk条件及循环语句
+    1. IF条件判断格式：
+    if (表达式)
+         动作1
+     else
+         动作2
+     或者if (表达式)  动作1；else 动作2
+     说明：如果表达式的判断结果为真则执行动作1，否则执行动作2。
+    示例：(判断boot分区可用容量小于20M时报警，否则显示OK)
+whwu@master:~/script> df  |grep    "boot"  |awk  '{if($4<20000) print "Alart"; else print "OK"}'
+OK
+
+
+ 2. 循环
+    while (条件)
+         动作
+    x=1
+     while (i < 10) {
+         print $i
+     }
+     示例：
+whwu@master:~/script> awk  ' BEGIN { while (i<=5) {++i; print i}}'  6.txt
+1
+2
+3
+4
+5
+6
+ do
+         动作
+    while (条件)
+     示例：
+ whwu@master:~/script> awk 'BEGIN { do {++x;print x} while (x<=5)}' test.txt
+1
+2
+3
+4
+5
+6
+for (变量；条件；计数器)
+         动作
+    示例：
+    for (i=1;i<=10;i++)
+         print i
+     [jacob@localhost ~]# awk  'BEGIN {for(i=1;i<=10;i++) print i}'  test.txt
+     [jacob@localhost ~]# awk  'BEGIN {for(i=10;i>=1;i--)  print i}'   test.txt
+     说明：因为以上循环语句使用的awk均使用的BEGIN模式，所以输入文档可以为任意文档(无关紧要)。
