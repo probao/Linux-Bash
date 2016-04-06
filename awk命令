@@ -392,3 +392,41 @@ whwu@master:~/script> awk -F: 'sub(/o/,"H",$1){print $1}' new   #字段中的第
 jHnes
 dHrothy
 tHto
+
+
+awk算例
+whwu@master:~/script> cat pay.txt
+Name    1st     2nd     3th
+VBird   23000   24000   25000
+DMTsai  21000   20000   23000
+Bird2   43000   42000   41000
+
+whwu@master:~/script> cat pay.sh
+#!/usr/bin/awk -f
+#pay.sh
+
+NR==1{printf "%10s %10s %10s %10s %10s\n",$1,$2,$3,$4,"Total" }
+NR>=2{total = $2 + $3 + $4
+printf "%10s %10d %10d %10d %10.2f\n", $1, $2, $3, $4, total}   #
+
+whwu@master:~/script> ./pay.sh pay.txt
+      Name        1st        2nd        3th      Total
+     VBird      23000      24000      25000   72000.00
+    DMTsai      21000      20000      23000   64000.00
+     Bird2      43000      42000      41000  126000.00
+printf命令模仿C程序库（library）里的printf()库程序（library routine）。它几乎复制了
+该函数的所有功能。不过在Shell层级的版本上，会有些差异。由于printf的行为是由POSIX
+标准所定义，因此使用printf的脚本比使用echo移植性好。
+printf命令的完整语法有两个部分：
+printf format-string [arguments...]
+第一部分为描述格式规格的字符串，用来描述输出的排列方式，最好为此字符串加上引号。此字符
+串包含按字面显示的字符以及格式声明，格式声明时特殊的占位符，用来描述如何显示相应的参数。
+第二部分是与格式声明相对应的参数列表，例如一系列的字符串或变量值。格式声明由两部分组成：
+百分比符号（%）和指示符。最常用的格式指示符有两个，%s用于字符串，而%d用于十进制整数。
+
+   #%-20s表示一个左对齐、宽度为20个字符字符串格式，不足20个字符，右侧补充相应数量的空格符。
+   #%-15s表示一个左对齐、宽度为15个字符字符串格式。
+   #%10.2f表示右对齐、10个字符长度的浮点数，其中一个是小数点，小数点后面保留两位。
+   /> printf "%-20s%-15s%10.2f\n" "Stephen" "Liu" 35
+   Stephen             Liu                 35.00
+    #%10s表示右对齐、宽度为10的字符串，如不足10个字符，左侧补充相应数量的空格符
