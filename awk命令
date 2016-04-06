@@ -352,3 +352,43 @@ for (变量；条件；计数器)
      [jacob@localhost ~]# awk  'BEGIN {for(i=1;i<=10;i++) print i}'  test.txt
      [jacob@localhost ~]# awk  'BEGIN {for(i=10;i>=1;i--)  print i}'   test.txt
      说明：因为以上循环语句使用的awk均使用的BEGIN模式，所以输入文档可以为任意文档(无关紧要)。
+
+
+Break与Continue
+     break        跳出循环
+    continue    终止当前循环
+ whwu@master:~/script> awk 'BEGIN{for(i=1;i<=10;i++){if(i==5){continue}print i}}' test.sh
+1
+2
+3
+4
+6
+7
+8
+9
+10
+whwu@master:~/script> awk 'BEGIN{for(i=1;i<=10;i++){if(i==5){break}print i}}' test.sh
+1
+2
+3
+4
+
+函数
+ gsub(x,y,z)        在字串z中使用字串y替换与正则表达式x相匹配的所有字串，z默认为$0
+  sub(x,y,z)        在字串z中使用字串y替换与正则表达式x相匹配的第一个字串，z默认为$0
+whwu@master:~/script> awk -F: 'gsub(/x/,"H",$0){print $0}' new
+jones:H:516:516:Adrian W. Jones/OSD211/555-0123:/home/vfung:/bin/bash
+dorothy:H:517:517:Dorothy Gale/KNS321/555-0044:/home/nmehio:/bin/bash
+toto:H:518:518:Toto Gale/KNS322/555-0045:/home/mmicklich:/bin/bash
+ben:H:519:519:Ben Franklin/OSD212/555-0022:/home/whwu:/bin/bash\
+betsy:H:520:520:Betsy Ross/BMD17/555-0095:/home/ysong:/bin/bash
+
+whwu@master:~/script> awk -F: 'gsub(/o/,"H",$1){print $1}' new  #字段中的所有o都变成H
+jHnes
+dHrHthy
+tHtH
+
+whwu@master:~/script> awk -F: 'sub(/o/,"H",$1){print $1}' new   #字段中的第一个o变成H
+jHnes
+dHrothy
+tHto
