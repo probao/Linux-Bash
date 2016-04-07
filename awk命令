@@ -430,3 +430,66 @@ printf format-string [arguments...]
    /> printf "%-20s%-15s%10.2f\n" "Stephen" "Liu" 35
    Stephen             Liu                 35.00
     #%10s表示右对齐、宽度为10的字符串，如不足10个字符，左侧补充相应数量的空格符
+
+
+
+whwu@master:~/script> cat grade.txt
+M.Tansley       05/99   48311   Green   8       40      44
+J.Lulu          06/99   48317   green   9       24      26
+P.Bunny         02/99   48      Yellow  12      35      28
+J.Troll         07/99   4842    Brown-3 12      26      26
+L.Tansley       05/99   4712    Brown-2 12      30      28
+whwu@master:~/script> awk 'BEGIN{printf "%-10s %-10s\n","Name","Belt";print "-----------------\n"}{printf "%-10s %-10s\n",$1,$4}' grade.txt  #添加表头 右匹配
+Name       Belt
+-----------------
+
+M.Tansley  Green
+J.Lulu     green
+P.Bunny    Yellow
+J.Troll    Brown-3
+L.Tansley  Brown-2
+
+whwu@master:~/script> awk '$3~/48/ {print $0}' grade.txt        # 非精确匹配  ~匹配
+M.Tansley       05/99   48311   Green   8       40      44
+J.Lulu          06/99   48317   green   9       24      26
+P.Bunny         02/99   48      Yellow  12      35      28
+J.Troll         07/99   4842    Brown-3 12      26      26
+
+
+whwu@master:~/script> awk '$3=="48" {print $0}' grade.txt       #精确匹配
+P.Bunny         02/99   48      Yellow  12      35      28
+
+whwu@master:~/script> awk '$6 < $7 {print $0 "\t" "Try better"}' grade.txt      #小于
+M.Tansley       05/99   48311   Green   8       40      44      Try better
+J.Lulu          06/99   48317   green   9       24      26      Try better
+
+
+whwu@master:~/script> awk '$1~/^..T/' grade.txt				#匹配第一个域第二个字母是T的行
+M.Tansley       05/99   48311   Green   8       40      44
+J.Troll         07/99   4842    Brown-3 12      26      26
+L.Tansley       05/99   4712    Brown-2 12      30      28
+
+
+whwu@master:~/script> awk '$0~/(Yellow|Brown)/' grade.txt		#匹配整行中含Yellow以及Brown的行
+P.Bunny         02/99   48      Yellow  12      35      28
+J.Troll         07/99   4842    Brown-3 12      26      26
+L.Tansley       05/99   4712    Brown-2 12      30      28
+
+whwu@master:~/script> echo $PWD					       #参数指定分隔符-F \t的应用
+/home/whwu/script
+whwu@master:~/script> echo $PWD | awk -F/ '{print $NF"\t"NF }'
+script  4
+
+whwu@master:~/script> awk '{if($1=="M.Tansley") $6=$6-1;print $1,$6,$7}' grade.txt  #修改数值域取值，注意‘{}’
+M.Tansley 39 44
+J.Lulu 24 26
+P.Bunny 35 28
+J.Troll 26 26
+L.Tansley 30 28
+
+whwu@master:~/script> awk '{if($1=="M.Tansley"){$6=$6-1; print $1,$6,$7} else print"o"}' grade.txt  #注意与上一条的区别
+M.Tansley 39 44
+o
+o
+o
+o
