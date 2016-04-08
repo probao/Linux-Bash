@@ -512,4 +512,82 @@ J.Troll         07/99   4842    Brown-3 12      26      26
 L.Tansley       05/99   4712    Brown-2 12      30      28
 Club student total points: 155
 
+awk 内置字符串函数
+
+gsub(r,s)          在整个$0中用s替代r
+gsub(r,s,t)        在整个t中使用s替代r
+index(s,t)         在返回s中字符串t的第一个位置
+length(s)          放回s长度
+match(s,r)         测试s是否包含匹配r的字符串
+split(s,a,fs)      在fs上将s分成序列a
+sprint(fmt,exp)    返回经fmt格式化后的exp
+sub(r,s)           用$0中最左边最长的子串代替s
+substr(s,p)        返回字符串s中从p开始的后缀部分
+substr(s,p,n)      返回字符串s中从p开始长度为n的后缀部分
+
+whwu@master:~/script> awk 'gsub(/4842/,4899){print $0}' grade.txt    #gsub(r,s)在整个$0中用s替代r 替换，目标串使用正则表达式格式‘//’
+J.Troll         07/99   4899    Brown-3 12      26      26
+whwu@master:~/script> awk 'gsub(4842,4899){print $0}' grade.txt
+J.Troll         07/99   4899    Brown-3 12      26      26
+
+whwu@master:~/script> awk 'gsub(8,0,$3){print $0}' grade.txt     #gsub(r,s,t)在整个t中使用s替代r，在第三个域中，将8替换为0.
+M.Tansley 05/99 40311 Green 8 40 44
+J.Lulu 06/99 40317 green 9 24 26
+P.Bunny 02/99 40 Yellow 12 35 28
+J.Troll 07/99 4042 Brown-3 12 26 26
+
+whwu@master:~/script> awk 'BEGIN{print index("Bunny","ny")}' grade.txt   #index(s,t)在返回s中字符串t的第一个位置， BEGIN在读取文本之前，因此只打印一个4
+4
+whwu@master:~/script> awk '{print index("Bunny","ny")}' grade.txt	 #没有BEGIN，每读取一行都要进行一次打印
+4
+4
+4
+4
+4
+
+whwu@master:~/script> awk '$1=="J.Troll" {print length($1),$1}' grade.txt # length（s）返回s的长度
+7 J.Troll
+whwu@master:~/script> awk '$1=="J.Troll" {print length($1)"\t" $1}' grade.txt #注意"\t"的应用
+7       J.Troll
+
+
+
+whwu@master:~/script> awk 'BEGIN{print match("ANCD",/d/)}'       #测试s是否包含匹配r的字符串，否返回0，真返回字符串中位置
+0
+whwu@master:~/script> awk 'BEGIN{print match("ANCD",/D/)}'
+4
+whwu@master:~/script> awk 'NR==1{print match($1,/a/)}' grade.txt
+4
+
+
+whwu@master:~/script> awk 'BEGIN{print split("123#456#789",myarray,"#");print myarray[1],myarray[2],myarray[3]}'  #split(s,a,fs)以fs为分隔符将，将s分隔为数组a
+3
+123 456 789
+
+whwu@master:~/script> awk '$1=="J.Troll"{sub(26,29,$0)}{print $0}' grade.txt   #替换第一个
+M.Tansley       05/99   48311   Green   8       40      44
+J.Lulu          06/99   48317   green   9       24      26
+P.Bunny         02/99   48      Yellow  12      35      28
+J.Troll         07/99   4842    Brown-3 12      29      26
+L.Tansley       05/99   4712    Brown-2 12      30      28
+whwu@master:~/script> awk '$1=="J.Troll"{gsub(26,29,$0)}{print $0}' grade.txt  #替换所有
+M.Tansley       05/99   48311   Green   8       40      44
+J.Lulu          06/99   48317   green   9       24      26
+P.Bunny         02/99   48      Yellow  12      35      28
+J.Troll         07/99   4842    Brown-3 12      29      29
+L.Tansley       05/99   4712    Brown-2 12      30      28
+
+
+whwu@master:~/script> awk '$1=="L.Tansley"{print substr($1,1,5)}' grade.txt  #打印字符串指定范围内的子串
+L.Tan
+
+whwu@master:~/script> awk '{print substr($1,3)}' grade.txt #打印第一个字符串，由第三个子串后的部分
+Tansley
+Lulu
+Bunny
+Troll
+Tansley
+
+
+
 
