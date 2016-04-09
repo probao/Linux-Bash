@@ -57,6 +57,68 @@ whwu@master:~/script> echo -e "A B C\nD E F\nG H I" | awk 'NR==1 {print $1}' # N
 A
 
 
+一个文件中如果有相同的行连续出现就只打印一次
+whwu@master:~/script> cat error_strip.sh
+#!/bin/awk -f
+
+ #to call: error_strip.awk <filename>
+ #strips out the ERROR* lines if there are more than one
+ #ERROR* lines after each filed record.
+ BEGIN{
+     error_line=""                                       #定义变量error_line
+ }
+     #tell awk the whole is "ERROR *"
+     {
+         if ($0 == "ERROR*" && error_line == "ERROR*")   #如果整行是ERROR*，且error_line=ERROR*
+            { next}					 #回到程序开头，忽略后面语句
+        else
+            { error_line = $0;                           #else error_line为整行信息
+        print                                            #打印
+        }
+     }
+
+
+ #!/bin/awk -f
+ #error_strip.awk
+ #to call: error_strip.awk <filename>
+ #strips out the ERROR* lines if there are more than one
+ #ERROR* lines after each filed record.
+ BEGIN{
+     error_line=""
+ }
+     #tell awk the whole is "ERROR *"
+     {
+         if ($0 == "ERROR*" && error_line == "ERROR*")
+             next;
+         error_line = $0;
+         print
+     }
+
+whwu@master:~/script>cat error_strip.sh
+INVALID LCSD 98GJ23
+ERROR*
+ERROR*
+CAUTION LPSS ERROR ON ACC NO.
+ERROR*
+ERROR*
+ERROR*
+ERROR*
+ERROR*
+PASS FILED INVALID ON GHSI
+ERROR*
+CUTION LPSS ERROR ON ACC NO.
+ERROR*
+ERROR*
+
+whwu@master:~/script> ./error_strip.sh error.txt
+LID LCSD 98GJ23
+ERROR*
+CAUTION LPSS ERROR ON ACC NO.
+ERROR*
+PASS FILED INVALID ON GHSI
+ERROR*
+CUTION LPSS ERROR ON ACC NO.
+ERROR*
 
 
 
