@@ -121,4 +121,15 @@ CUTION LPSS ERROR ON ACC NO.
 ERROR*
 
 
+#向AWK脚本传递参数
+whwu@master:~/script> cat age.sh
+#!/bin/awk -f
+#age.sh
+{
+        if($5 < AGE )
+                print $0
+}
+whwu@master:~/script> ./age.sh AGE=10 grade.txt
+M.Tansley       05/99   48311   Green   8       40      44
+J.Lulu          06/99   48317   green   9       24      26
 
