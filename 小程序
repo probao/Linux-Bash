@@ -133,3 +133,26 @@ whwu@master:~/script> ./age.sh AGE=10 grade.txt
 M.Tansley       05/99   48311   Green   8       40      44
 J.Lulu          06/99   48317   green   9       24      26
 
+awk 数组，awk数组是类似于一个键值对，既可以使用数字做下标，也可以使用字符串做下标
+whwu@master:~/script> cat arraytest.sh
+#!/bin/awk -f
+#name:arraytest.sh
+#prints out an array
+
+BEGIN{
+        record="123#456#789";
+        split(record,myarray,"#")
+}
+END{
+        for(i in myarray)
+        {
+                print myarray[i]
+        }
+}
+whwu@master:~/script> ./arraytest.sh size.txt
+123
+456
+789
+
+
+
