@@ -1,0 +1,59 @@
+tail以及head
+whwu@master:~/script> seq 20 | head   #打印前10行
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+whwu@master:~/script> seq 20 | head -n 4   #打印前4行
+1
+2
+3
+4
+
+whwu@master:~/script> seq 20 | head -n -14    #打印最后14行之外的行
+1
+2
+3
+4
+5
+6
+
+whwu@master:~/script> seq 20 | tail -n  -5     #打印最后5行
+16
+17
+18
+19
+20
+whwu@master:~/script> seq 20 | tail -n 5
+16
+17
+18
+19
+20
+
+whwu@master:~/script> seq 20 | tail -n +5      #打印第5行之后的行
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+
+
