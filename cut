@@ -1,0 +1,59 @@
+cut命令
+whwu@master:~/script> cat student_data.txt
+No      Name    Mark    Percent
+1       Sarath  45      90
+2       Alex    49      98
+3       Anu     45      90
+
+whwu@master:~/script> cut -f2,3 student_data.txt  #打印第2,3列
+Name    Mark
+Sarath  45
+Alex    49
+Anu     45
+
+whwu@master:~/script> cut -f2,3 --complement student_data.txt  #打印除了第2,3列的列
+No      Percent
+1       90
+2       98
+3       90
+
+whwu@master:~/script> cat delimited_data.txt
+No;Name;Mark;Percent
+1;Sarath;45;90
+2;Alex;49;98
+3;Anu;45;90
+whwu@master:~/script> cut -f2 -d";" delimited_data.txt       #通过-d来注明分隔符
+Name
+Sarath
+Alex
+Anu
+
+
+whwu@master:~/script> cat range_fields.txt		   
+bsdefghijklmnopqrstuvwxyz
+absdefghijklmnopqrstuvwxyz
+absdefghijklmnopqrstuvwxyz
+absdefghijklmnopqrstuvwxyz
+absdefghijklmnopqrstuvwxyz
+whwu@master:~/script> cut -c1-3 range_fields.txt             #打印1到5个字符
+bsd
+abs
+abs
+abs
+abs
+whwu@master:~/script> cut -c3 range_fields.txt		     #打印第3列
+d
+s
+s
+s
+s
+
+whwu@master:~/script> cut -c1-3,6-9 --output-delimiter "," range_fields.txt  #输出分隔符是，
+bsd,ghij
+abs,fghi
+abs,fghi
+abs,fghi
+abs,fghi
+
+
+
