@@ -241,7 +241,33 @@ whwu@master:~/script> awk 'BEGIN{i=0}{i+=$1}END{print i}' number.txt
 55
 
 
-单词排序
+计算文件中单词的频率
+whwu@master:~/script> cat word_freq.sh
+#!/bin/bash
+#word_freq.sh
+
+if [ $# -ne 1 ];
+then
+echo "Usage: $0 filename";
+exit -l
+fi
+
+filename=$1
+
+egrep -o "\b[[:alpha:]]+\b" $filename | \
+awk '{ count[$0]++ }
+END{ printf("%-14s%s\n","Word","Count");
+for (ind in count)
+{ printf("%-14s%d\n",ind,count[ind]);}
+}'
+whwu@master:~/script> ./word_freq.sh word.txt
+Word          Count
+used          3
+apple         3
+this          1
+haha          2
+
+
 #! /bin/sh
 
 tr -cs "[A-Z][a-z]" "\n" | 	 # change the complement of letter to line break and delete continuous lines
