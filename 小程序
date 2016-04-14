@@ -277,3 +277,17 @@ tr -cs "[A-Z][a-z]" "\n" | 	 # change the complement of letter to line break and
 	sort -k1,1nr -k2 |	 # first sort according to number, large to small second sort in terms of letters
 	  sed ${1:-25}q
 
+whwu@master:~/script> cat 7.txt
+1 3
+3 7
+4 4
+7 5
+23 12
+1 1
+2 3
+5 7
+whwu@master:~/script> awk 'NR%4==1{i=0;j=0; print }NR%4!=1{i+=$1;j+=$2;if(NR%4==0)print i,j}' 7.txt
+1 3
+14 16
+23 12
+8 11
