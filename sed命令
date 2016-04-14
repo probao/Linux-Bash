@@ -149,6 +149,8 @@ whwu@master:~/script> echo aaa BBB | sed 's/\([a-z]\) \([A-Z]\)/\2 \1/'     #\([
 aaB aBB
 whwu@master:~/script> echo aaa BBB | sed 's/\([a-z]\+\) \([A-Z]\+\)/\2 \1/'  #\([a-z]\+\) 匹配第一个由小写字母组成的单词
 BBB aaa
+whwu@master:~> echo this is digit 7 in a number | sed 's/digit \([0-9]\)/\1/'   #\(..\) 用于匹配子串，对于匹配到的第一个子串就标记为 \1，匹配的是数字7
+this is 7 in a number
 
 
 #######引用#######
