@@ -1,0 +1,27 @@
+paste命令以及打印行与列
+whwu@master:~/script> cat 7.txt
+1
+3
+4
+7
+whwu@master:~/script> cat 8.txt
+1
+2
+3
+4
+whwu@master:~/script> paste 7.txt 8.txt #默认分隔符是制表符
+1       1
+3       2
+4       3
+7       4
+whwu@master:~/script> paste 7.txt 8.txt -d ".." #-d定义分隔符
+1.1
+3.2
+4.3
+7.4
+
+whwu@master:~/script> seq 10 | awk 'NR==2,NR==5' 打印第2行到第3行
+2
+3
+4
+5
