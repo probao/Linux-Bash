@@ -1,0 +1,62 @@
+行，单词，字符的迭代
+
+whwu@master:~/script> cat 1.txt
+book google
+baidu book book
+i lovae shell book apple
+
+
+whwu@master:~/script> cat loopforword.sh  #行的迭代
+#/bin/bash
+
+while read line;
+do
+        #for i in $line;
+        #do
+                echo $line;
+        #done
+done < $1
+
+whwu@master:~/script> ./loopforword.sh 1.txt 
+book google
+baidu book book
+i lovae shell book apple
+
+
+
+
+whwu@master:~/script> cat loopforword.sh #单词的迭代
+#/bin/bash
+
+while read line;
+do
+        for i in $line;
+        do
+                echo $i;
+        done
+done < $1
+whwu@master:~/script> ./loopforword.sh 1.txt
+book
+google
+baidu
+book
+book
+i
+lovae
+shell
+book
+apple
+
+whwu@master:~/script> cat  loopforword.sh   #字符迭代
+#/bin/bash
+
+while read line;
+do
+        for word in $line;
+        do
+                for((i=0;i<${#word};i++))
+                do
+                echo ${word:i:1};
+        done
+done
+done < $1
