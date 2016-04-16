@@ -20,6 +20,12 @@ whwu@master:~/script> paste 7.txt 8.txt -d ".." #-d定义分隔符
 4.3
 7.4
 
+whwu@master:~/script> ls -l | awk '{ print $1 ":" $8}' | head -n 4  #打印第1列和第8列
+total:
+-rw-rw-r--:22:19
+-rw-rw-r--:23:16
+-rw-rw-r--:21:50
+
 whwu@master:~/script> seq 10 | awk 'NR==2,NR==5' 打印第2行到第3行
 2
 3
