@@ -11,3 +11,5 @@ whwu@master:~/script> seq 5 | tac
 3
 2
 1
+whwu@master:~/script> echo apple is red | rev | tr ' ' '\n' | tac | tr '\n' ' ' | rev
+ red is apple
