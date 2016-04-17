@@ -355,7 +355,18 @@ whwu@master:~/script> ./match_palindrome.sh 8.txt 5
 acsca
 uioiu
 
+whwu@master:~/script> cat match_palindrome2.sh #通过rev来判断是否是回文字
+#!/bin/bash
 
+string=$1
+if [[ "$string" == "$(echo $string | rev )" ]];
+then
+echo "Palindrome"
+else
+echo "Not palindrome"
+fi
+whwu@master:~/script> ./match_palindrome2.sh asdsa
+Palindrome
 
 
 
