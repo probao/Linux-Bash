@@ -1,0 +1,13 @@
+tac命令
+whwu@master:~/script> seq 5
+1
+2
+3
+4
+5
+whwu@master:~/script> seq 5 | tac
+5
+4
+3
+2
+1
