@@ -291,3 +291,71 @@ whwu@master:~/script> awk 'NR%4==1{i=0;j=0; print }NR%4!=1{i+=$1;j+=$2;if(NR%4==
 14 16
 23 12
 8 11
+
+whwu@master:~/script> cat test  #if循环注意格式
+#!/bin/bash
+
+#a=1;
+if [ $(($1%2)) -ne 1 ];
+then
+        echo "ok";
+else
+        echo "oh~no~";
+fi
+whwu@master:~/script> ./test 5
+oh~no~
+
+
+匹配回文字（abba或aba）
+whwu@master:~/script> cat match_palindrome.sh
+#!/bin/bash
+#match_paliindrome.sh
+
+if [ $# -ne 2 ];
+then
+        echo "Usage: $0 filename string_length"
+exit -l
+fi
+
+filename=$1;
+basepattern='/^\(.\)'
+count=$(($2/2))             #当$2=3时，count=1
+
+for((i=1;i<$count;i++))
+do
+basepattern=$basepattern'\(.\)';
+done
+
+if [ $(($2%2)) -ne 0 ];       #注意if语句中的空格
+then
+ basepattern=$basepattern'.';
+fi
+
+for((count;count>0;count--))
+do
+basepattern=$basepattern'\'"$count";
+done
+
+basepattern=$basepattern'$/p'
+sed -n "$basepattern" $filename
+whwu@master:~/script> cat 8.txt
+abba
+cac
+acssca
+acsca
+qwerrewq
+wecac
+acssca
+tyyt
+uioiu
+123321
+1221
+121
+whwu@master:~/script> ./match_palindrome.sh 8.txt 5
+acsca
+uioiu
+
+
+
+
+
