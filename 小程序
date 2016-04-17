@@ -368,5 +368,21 @@ fi
 whwu@master:~/script> ./match_palindrome2.sh asdsa
 Palindrome
 
+whwu@master:~/script> cat number.sh   #for(...)中不能进行小数运算 生成含小数的数列
+#!/bin/bash
+
+j=10
+for ((i=1;i<=5;i++))
+do
+        echo $j;
+        j=$(echo "$j-0.5" | bc);
+done
+
+whwu@master:~/script> ./number.sh
+10
+9.5
+9.0
+8.5
+8.0
 
 
