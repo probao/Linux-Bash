@@ -126,6 +126,21 @@ whwu@master:~/script> seq 10 | grep 5 -C 2    #打印5之前之后两行
 7
 
 
+whwu@master:~/script> cat 9.txt
+.a
+.ab
+.abc
+.abcd
+.abcdef
+.wer
+whwu@master:~/script> egrep -o "\.[a-z]{3,4}" 9.txt   #\转译符 [a-z]{3,4} 三个到四个字母
+.abc
+.abcd
+.abcd
+.wer
+
+
+
 
 
 
