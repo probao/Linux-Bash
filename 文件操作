@@ -1,0 +1,36 @@
+###########文件的差集与交集#########
+whwu@master:~/script> cat A.txt
+apple
+gold
+iron
+orange
+silver
+steel
+
+whwu@master:~/script> cat B.txt
+carrot
+cookies
+gold
+orange
+
+whwu@master:~/script> comm A.txt B.txt
+apple
+                orange
+comm: file 1 is not in sorted order
+comm: file 2 is not in sorted order
+                gold
+        cookies
+        carrot
+silver
+steel
+iron
+whwu@master:~/script> sort A.txt -o A.txt; sort B.txt -o B.txt
+whwu@master:~/script> comm A.txt B.txt
+apple
+        carrot
+        cookies
+                gold
+iron
+                orange
+silver
+steel
