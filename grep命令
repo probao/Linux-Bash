@@ -139,6 +139,22 @@ whwu@master:~/script> egrep -o "\.[a-z]{3,4}" 9.txt   #\转译符 [a-z]{3,4} 三
 .abcd
 .wer
 
+##############解析文本中的电子邮件地址和URL################
+whwu@master:~/script> cat url_email.txt
+this is a line of text contains,<email> #slynux@slynux.com. </email>
+and email address, blog "http://www.google.com", test@yahoo.com
+dfdfdfddf;cool.hacks@gmail.com<br />
+<ahref="http://code.google.com"><h1>Heading</h1>
+
+whwu@master:~/script> egrep -o '[A-Za-z0-9.]+@[A-Za-z0-9]+\.[a-zA-Z]{2,4}' url_email.txt   #匹配电子邮件[..]+表示多个方括号中的内容
+slynux@slynux.com
+test@yahoo.com
+cool.hacks@gmail.com
+
+whwu@master:~/script> egrep -o "http://[a-zA-Z0-9.]+\.[a-zA-Z]{2,3}" url_email.txt  #匹配一个HTTP URL
+http://www.google.com
+http://code.google.com
+
 
 
 
