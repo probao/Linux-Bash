@@ -1,0 +1,9 @@
+whwu@master:~/script> cat 2.txt
+1 2 6
+2 3 9
+3 4 12
+4 5 15
+whwu@master:~/script> awk 'BEGIN{getline;print $0}' 2.txt  #读取第一行
+1 2 6
+whwu@master:~/script> awk 'BEGIN{getline;getline;print $0}' 2.txt  #第一个getline先读取第一行，然后丢弃读取第二行
+2 3 9
