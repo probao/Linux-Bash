@@ -34,3 +34,40 @@ iron
                 orange
 silver
 steel
+
+文件备份以及压缩
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt
+whwu@master:~/script/test> tar -cf output.tar 1.txt 2.txt   #将两个文件打包成一个文件  -c创建  -f指定文件名
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  output.tar
+whwu@master:~/script/test> tar -tf output.tar       #-t查看文件
+1.txt
+2.txt
+
+whwu@master:~/script/test> tar -rvf output.tar 3.txt   #-r追加  -v压缩的过程中显示文件
+3.txt
+whwu@master:~/script/test> tar -tf output.tar
+1.txt
+2.txt
+3.txt
+
+whwu@master:~/script/test> ls
+4.txt  fortar  output.tar
+whwu@master:~/script/test> tar -xf output.tar       #-x表示提取extract
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  fortar  output.tar
+
+whwu@master:~/script/test/fortar> ls
+whwu@master:~/script/test/fortar>
+whwu@master:~/script/test/fortar> tar -xf ../output.tar -C .   #-C必须是大写 指定文件提取至哪个文件夹
+whwu@master:~/script/test/fortar> ls
+1.txt  2.txt  3.txt
+whwu@master:~/script/test/fortar> tar -xvf ../output.tar 1.txt -C .   #只提取指定文件至文件夹
+1.txt
+whwu@master:~/script/test/fortar> ls
+1.txt
+
+
+
+
