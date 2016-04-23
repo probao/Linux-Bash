@@ -78,6 +78,48 @@ whwu@master:~/script/test> tar -tvf first.tar
 -rw-rw-r-- whwu/whwu        29 2016-04-22 00:06 2.txt
 -rw-rw-r-- whwu/whwu       111 2016-04-22 00:06 3.txt
 
+whwu@master:~/script/test> tar -tf first.tar
+1.txt
+2.txt
+1.txt
+2.txt
+3.txt
+whwu@master:~/script/test> tar --delete --file  first.tar 3.txt     #从归档文件中删除文件
+whwu@master:~/script/test> tar -tf first.tar
+1.txt
+2.txt
+1.txt
+2.txt
+whwu@master:~/script/test> tar --delete --file  first.tar 1.txt
+whwu@master:~/script/test> tar -tf first.tar
+2.txt
+2.txt
+tar命令只是将文件归档
+
+whwu@master:~/script/test> tar -tf output.tar
+1.txt
+2.txt
+3.txt
+4.txt
+whwu@master:~/script/test> tar -cf output.tar * --exclude "1.txt"  #从归档中排除某些文件
+whwu@master:~/script/test> tar -tf output.tar
+2.txt
+3.txt
+4.txt
+
+
+whwu@master:~/script/test> tar -cf output.tar * --exclude "1.txt"  --totals   #--total显示有多少个字节
+tar: output.tar: file is the archive; not dumped
+Total bytes written: 10240 (10KiB, 23MiB/s)
+whwu@master:~/script/test> tar -tf output.tar
+2.txt
+3.txt
+4.txt
+
+
+
+
+
 
 
 
