@@ -1,0 +1,201 @@
+一、创建目录（mkdir命令详解） 
+
+amosli@amosli-pc:~/learn$ mkdir dir
+amosli@amosli-pc:~/learn/dir$ mkdir folder
+amosli@amosli-pc:~/learn/dir$ ls
+folder
+
+上面的命令中用到了mkdir，即是创建一个目录，非常常用的一个linux 命令。 该命令创建指定的目录名，要求创建目录的用户在当前目录中具有写权限，并且指定的目录名不能是当前目录中已有的目录. 
+
+在命令行内输入mkdir --help查看帮助信息.
+
+amosli@amosli-pc:~/learn/dir$ mkdir --help
+Usage: mkdir [OPTION]... DIRECTORY...
+Create the DIRECTORY(ies), if they do not already exist.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -m, --mode=MODE   set file mode (as in chmod), not a=rwx - umask
+  -p, --parents     no error if existing, make parent directories as needed
+  -v, --verbose     print a message for each created directory
+  -Z, --context=CTX  set the SELinux security context of each created
+                      directory to CTX
+      --help     display this help and exit
+      --version  output version information and exit
+
+Report mkdir bugs to bug-coreutils@gnu.org
+GNU coreutils home page: <http://www.gnu.org/software/coreutils/>
+General help using GNU software: <http://www.gnu.org/gethelp/>
+For complete documentation, run: info coreutils 'mkdir invocation'
+
+由上面提示可以得知 mkdir命令语法为： 
+
+mkdir [OPTION]... DIRECTORY...
+
+其中[参数]都是可选，非必选。
+
+选项介绍: 
+    -m: 对新建目录设置存取权限,也可以用 chmod 命令设置; 
+
+    -p: 可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录; 
+
+    -v:表示打印每一个创建的目录的信息。 
+
+    -z:从语义来看，是为每个ctx创建目录时设置SELinux级安全上下文。 
+
+    -help,-version一个是显示帮助信息，一个是显示版本号
+
+下面就来举例说明参数内容：
+
+实例： 
+
+如何创建多级目录？如何在amosli@amosli-pc:~/learn/dir/folder$目录下创建/par/child/grand 
+
+amosli@amosli-pc:~/learn/dir/folder$ mkdir par
+#可不可以直接创那child/grand/目录？
+amosli@amosli-pc:~/learn/dir/folder$ mkdir par/child/grand
+mkdir: cannot create directory `par/child/grand': No such file or directory #答案是不可以
+amosli@amosli-pc:~/learn/dir/folder$ mkdir par/child/
+amosli@amosli-pc:~/learn/dir/folder$ mkdir par/child/grand
+#创建完成
+amosli@amosli-pc:~/learn/dir/folder$ cd par/child/grand/
+amosli@amosli-pc:~/learn/dir/folder/par/child/grand$
+
+答案是有的，先删除刚才创建的目录：
+
+amosli@amosli-pc:~/learn/dir/folder$ ls
+par
+amosli@amosli-pc:~/learn/dir/folder$ rm -rf *
+amosli@amosli-pc:~/learn/dir/folder$ ls
+
+然后开始一次性创建目录：
+
+amosli@amosli-pc:~/learn/dir/folder$ mkdir -p par/child/grand
+amosli@amosli-pc:~/learn/dir/folder$ cd par/child/grand/
+amosli@amosli-pc:~/learn/dir/folder/par/child/grand$
+
+加上-p参数即可。 
+
+实例２： 
+
+amosli@amosli-pc:~/learn/dir/folder$ rm -rf *　＃删除目录
+amosli@amosli-pc:~/learn/dir/folder$ mkdir -v -m 775 par　
+mkdir: created directory `par'
+amosli@amosli-pc:~/learn/dir/folder$ ll
+total 12
+drwxrwxr-x 3 amosli amosli 4096 12月 26 22:57 ./
+drwxrwxr-x 3 amosli amosli 4096 12月 26 22:33 ../
+drwxrwxr-x 2 amosli amosli 4096 12月 26 22:57 par/
+amosli@amosli-pc:~/learn/dir/folder$
+
+由上面的例子可以看出 -m 是管理权限的，-v 是显示创建信息的。 
+
+-Z参数看了半天没搞明白到底怎么用，这里就跳过了。
+
+二、创建文件(touch命令详解) 
+
+创建文件的方式比较多，如上一篇讲到的dd 命令，和之前的 echo "hello" > a.txt 类似的>创建文件, 这里主要介绍touch命令 
+
+touch命令主要用来修改文件时间戳，或者新建一个不存在的文件  
+
+touch --help来看一下帮助信息： 
+
+amosli@amosli-pc:~/learn/dir/folder/par$ touch --help
+Usage: touch [OPTION]... FILE...
+Update the access and modification times of each FILE to the current time.
+
+A FILE argument that does not exist is created empty, unless -c or -h
+is supplied.
+
+A FILE argument string of - is handled specially and causes touch to
+change the times of the file associated with standard output.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a                     change only the access time
+  -c, --no-create        do not create any files
+  -d, --date=STRING      parse STRING and use it instead of current time
+  -f                     (ignored)
+  -h, --no-dereference   affect each symbolic link instead of any referenced
+                         file (useful only on systems that can change the
+                         timestamps of a symlink)
+  -m                     change only the modification time
+  -r, --reference=FILE   use this file's times instead of current time
+  -t STAMP               use [[CC]YY]MMDDhhmm[.ss] instead of current time
+  --time=WORD            change the specified time:
+                           WORD is access, atime, or use: equivalent to -a
+                           WORD is modify or mtime: equivalent to -m
+      --help     display this help and exit
+      --version  output version information and exit
+
+Note that the -d and -t options accept different time-date formats.
+
+Report touch bugs to bug-coreutils@gnu.org
+GNU coreutils home page: <http://www.gnu.org/software/coreutils/>
+General help using GNU software: <http://www.gnu.org/gethelp/>
+For complete documentation, run: info coreutils 'touch invocation'
+
+从中可以看出来与mkdir 很类似，touch 的命令语法如下：
+
+touch [OPTION]... FILE...
+
+其中，参数非必选，现在就来看下提供的参数有哪些，各有什么作用？
+
+ 　－a 改变档案的读取时间记录。
+
+　 －m 改变档案的修改时间记录。
+
+　 －c 假如目的档案不存在，不会建立新的档案。与 --no-create 的效果一样。
+   -h ,不干扰引用 影响每个符号链接，而不是所有参考文件（只适用于系统的改变一个符号，时间戳）
+
+　 －f 不会执行实际操作，是为了与其他 unix 系统的相容性而保留。
+
+　 －r 使用参考档的时间记录，与 --file 的效果一样。
+
+　 －d 设定时间与日期，可以使用各种不同的格式。
+
+　 －t 设定档案的时间记录，格式与 date 指令相同。[[CC]YY]MMDDhhmm[.SS]，CC为年数中的前两位，即”世纪数”;YY为年数的后两位，即某世纪中的年数.如果不给出CC的值，则linux中touch命令参数将把年数CCYY限定在1969--2068之内.MM为月数，DD为天将把年数CCYY限定在1969--2068之内.MM为月数，DD为天数，hh 为小时数(几点)，mm为分钟数，SS为秒数.此处秒的设定范围是0--61，这样可以处理闰秒.这些数字组成的时间是环境变量TZ指定的时区中的一个时间.由于系统的限制，早于1970年1月1日的时间是错误的.
+
+　 --no-create 不会建立新档案。
+
+　 --help 列出帮助信息
+   --version 列出版本信息
+
+实例１： 
+
+创建文件a.txt 
+
+amosli@amosli-pc:~/learn/dir/folder/par$ touch  a.txt 
+amosli@amosli-pc:~/learn/dir/folder/par$ ls -l
+total 0
+-rw-rw-r-- 1 amosli amosli 0 12月 26 23:07 a.txt
+
+实例２： 
+更改a.txt修改时间记录（-m参数）:
+
+amosli@amosli-pc:~/learn/dir/folder/par$ touch -m a.txt 
+amosli@amosli-pc:~/learn/dir/folder/par$ ls -l
+total 0
+-rw-rw-r-- 1 amosli amosli 0 12月 26 23:09 a.txt
+
+实例３： 
+
+指定时间来创建文件（-t参数）： 
+
+amosli@amosli-pc:~/learn/dir/folder/par$ touch -t 201812262315.34 b.txt
+amosli@amosli-pc:~/learn/dir/folder/par$ ll
+total 8
+drwxrwxr-x 2 amosli amosli 4096 12月 26 23:24 ./
+drwxrwxr-x 3 amosli amosli 4096 12月 26 22:57 ../
+-rw-rw-r-- 1 amosli amosli    0 12月 26 23:19 a.txt
+-rw-rw-r-- 1 amosli amosli    0 12月 26  2018 b.txt
+
+实例４：  
+
+＃将 file 的时间记录改变成与 referencefile 一样。
+touch -r referencefile file
+
+amosli@amosli-pc:~/learn/dir/folder/par$ touch -r b.txt  a.txt 
+amosli@amosli-pc:~/learn/dir/folder/par$ ls -l
+total 0
+-rw-rw-r-- 1 amosli amosli 0 12月 26  2018 a.txt
+-rw-rw-r-- 1 amosli amosli 0 12月 26  2018 b.txt
+
