@@ -68,6 +68,18 @@ whwu@master:~/script/test/fortar> tar -xvf ../output.tar 1.txt -C .   #只提取
 whwu@master:~/script/test/fortar> ls
 1.txt
 
+whwu@master:~/script/test> tar -Af first.tar output.tar               #合并两个.tar文件
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  first.tar  fortar  output.tar
+whwu@master:~/script/test> tar -tvf first.tar
+-rw-rw-r-- whwu/whwu        53 2016-04-22 00:06 1.txt
+-rw-rw-r-- whwu/whwu        29 2016-04-22 00:06 2.txt
+-rw-rw-r-- whwu/whwu        53 2016-04-22 00:06 1.txt
+-rw-rw-r-- whwu/whwu        29 2016-04-22 00:06 2.txt
+-rw-rw-r-- whwu/whwu       111 2016-04-22 00:06 3.txt
+
+
+
 
 
 
