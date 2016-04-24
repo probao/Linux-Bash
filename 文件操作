@@ -117,6 +117,34 @@ whwu@master:~/script/test> tar -tf output.tar
 4.txt
 
 
+bunzip以及bzip命令
+用bunzip或bzip压缩
+bunzip2是另一种与gzip类似的压缩技术。bzip2通常能够生成比gzip更小（压缩比更高）的文件。
+所有Linux发型版都包含了这个工具。
+whwu@master:~/script/test> bzip2 1.txt 2.txt 3.txt
+whwu@master:~/script/test> ls
+1.txt.bz2  2.txt.bz2  3.txt.bz2  4.txt  file1  file2  file3   #分别对文件进行压缩，没有归档
+
+whwu@master:~/script/test> bunzip2 1.txt.bz2   #解压缩时删除.bz2文件，然后生成1.txt的未压缩形式
+whwu@master:~/script/test> ls
+1.txt  2.txt.bz2  3.txt.bz2  4.txt  file1  file2  file3 
+
+whwu@master:~/script/test> tar -cjvvf test.tar.bz2 1.txt 2.txt 3.txt   #创建经由bzip2压缩过的归档文件
+-rw-rw-r-- whwu/whwu        58 2016-04-23 11:13 1.txt
+-rw-rw-r-- whwu/whwu        29 2016-04-22 00:06 2.txt
+-rw-rw-r-- whwu/whwu       111 2016-04-22 00:06 3.txt
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  file1  file2  file3  test.tar.bz2
+
+whwu@master:~/script/test> tar -xavvf test.tar.bz2 -C test  #将文件解压到指定文件
+-rw-rw-r-- whwu/whwu        58 2016-04-23 11:13 1.txt
+-rw-rw-r-- whwu/whwu        29 2016-04-22 00:06 2.txt
+-rw-rw-r-- whwu/whwu       111 2016-04-22 00:06 3.txt
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  file1  file2  file3  test  test.tar.bz2
+whwu@master:~/script/test> cd test
+whwu@master:~/script/test/test> ls
+1.txt  2.txt  3.txt
 
 
 
