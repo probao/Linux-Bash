@@ -146,7 +146,60 @@ whwu@master:~/script/test> cd test
 whwu@master:~/script/test/test> ls
 1.txt  2.txt  3.txt
 
+raync命令
+用raync备份系统快照
+rsync -av source_path destination_path   #-a表示要进行归档 -v表示在stdout上打印出细节信息或进度
 
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  file1  file2  file3  test  test1  test.tar.bz2
+whwu@master:~/script/test> rsync -av ./test ./test1    #将文件夹test 复制到test1中
+sending incremental file list
+test/
+test/1.txt
+test/2.txt
+test/3.txt
+
+sent 426 bytes  received 73 bytes  998.00 bytes/sec
+total size is 198  speedup is 0.40
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  file1  file2  file3  test  test1  test.tar.bz2
+whwu@master:~/script/test> cd test1
+whwu@master:~/script/test/test1> ls
+test
+
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  file1  file2  file3  test  test.tar.bz2
+whwu@master:~/script/test> rsync -av ./test ./test1  #可以创建文件夹test1
+sending incremental file list
+created directory ./test1
+test/
+test/1.txt
+test/2.txt
+test/3.txt
+
+sent 426 bytes  received 73 bytes  998.00 bytes/sec
+total size is 198  speedup is 0.40
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  file1  file2  file3  test  test1  test.tar.bz2
+
+
+
+whwu@master:~/script/test> rsync -av ./test ./test1 --exclude "1.txt"  #传递过程中，排除1.txt
+sending incremental file list
+created directory ./test1
+test/
+test/2.txt
+test/3.txt
+
+sent 310 bytes  received 54 bytes  728.00 bytes/sec
+total size is 140  speedup is 0.38
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  4.txt  file1  file2  file3  test  test1  test.tar.bz2
+whwu@master:~/script/test> cd test1
+whwu@master:~/script/test/test1> ls
+test
+whwu@master:~/script/test/test1> ls test
+2.txt  3.txt
 
 
 
