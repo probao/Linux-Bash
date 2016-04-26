@@ -1,0 +1,18 @@
+ping命令
+检查主机是否可以到达
+whwu@master:~/script/test> ping google.com   #主机能够到达
+PING google.com (172.217.1.46) 56(84) bytes of data.
+64 bytes from lax17s01-in-f14.1e100.net (172.217.1.46): icmp_seq=1 ttl=55 time=5.00 ms
+64 bytes from lax17s01-in-f14.1e100.net (172.217.1.46): icmp_seq=2 ttl=55 time=4.96 ms
+64 bytes from lax17s01-in-f14.1e100.net (172.217.1.46): icmp_seq=3 ttl=55 time=5.02 ms
+^C
+--- google.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2777ms
+rtt min/avg/max/mdev = 4.963/4.999/5.026/0.026 ms
+
+
+whwu@master:~/script/test> ping 192.168.0.99   #主机不能够到达
+PING 192.168.0.99 (192.168.0.99) 56(84) bytes of data.
+^C
+--- 192.168.0.99 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3749ms
