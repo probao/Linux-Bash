@@ -16,3 +16,27 @@ PING 192.168.0.99 (192.168.0.99) 56(84) bytes of data.
 ^C
 --- 192.168.0.99 ping statistics ---
 4 packets transmitted, 0 received, 100% packet loss, time 3749ms
+
+whwu@master:~> ping google.com -c2
+PING google.com (172.217.1.46) 56(84) bytes of data.
+64 bytes from lax17s01-in-f14.1e100.net (172.217.1.46): icmp_seq=1 ttl=55 time=5.03 ms
+64 bytes from lax17s01-in-f14.1e100.net (172.217.1.46): icmp_seq=2 ttl=55 time=4.99 ms
+
+--- google.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1007ms
+rtt min/avg/max/mdev = 4.995/5.014/5.034/0.073 ms
+whwu@master:~> if [ $? -eq 0 ];      #ping命令如果执行顺利，会返回退出状态0；否则，返回非0
+> then
+> echo successful;
+> else
+> echo failure
+> fi
+successful
+
+
+文件的传输
+scp命令
+whwu@master:~/script/test> scp 1.txt whwu@biocluster.ucr.edu:/rhome/whwu/test
+whwu@biocluster.ucr.edu's password:
+1.txt                                                       100%   58     0.1KB/s   00:00
+
