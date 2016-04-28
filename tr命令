@@ -1,6 +1,9 @@
 tr命令
 tr只能通过stdin（标准输入），而无法通过命令行参数来接受输入。它的调用格式如下：
-tr [options] set1 set2
+tr [options] source-char-list replace-char-list
+-c：取source-char-list的反义
+-d：自标准输入删除source-char-list里所列的字符
+-s：浓缩重复的字符
 
 $ echo "HELLO WHO IS THIS" | tr 'A-Z' 'a-z'
 $ hello who is this
