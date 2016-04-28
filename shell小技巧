@@ -1,0 +1,10 @@
+whwu@master:~/script/test> cat addfile.sh
+#!/bin/bash
+#add several files into one file
+
+set -x                                     # set -x 打开跟踪功能
+for f in ./*.txt
+do
+        tr -d '\n' < $f >> big.txt
+done
+set +x                                     # set +x 关闭跟踪功能
