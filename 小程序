@@ -385,6 +385,18 @@ whwu@master:~/script> ./number.sh
 8.5
 8.0
 
+########文件内容叠加##########
+whwu@master:~/script/test> cat addfile.sh
+#!/bin/bash
+#add several files into one file
+
+for f in ./*.txt
+do
+        tr -d '\n' < $f >> big.txt
+done
+
+
+
 ##############echo的小技巧#############
 whwu@master:~/script> var="This is a line of text"
 whwu@master:~/script> echo ${var/line/REPLACED}
