@@ -78,6 +78,39 @@ whwu@master:~/script> grep -e "google" -e "shell" 1.txt       # -e grep匹配多
 book google
 i lovae shell book apple
 
+
+###################meta字符. *###################
+whwu@master:~/script> cat 3.txt
+1234
+acco
+acddac
+acac
+4567
+6543
+12
+abbbc
+abc
+c
+whwu@master:~/script> grep 'a.c' 3.txt   #匹配a 任意一个字符 c
+acco
+abc
+whwu@master:~/script> grep 'a*c' 3.txt    #匹配a 任意个或零个a  c
+acco
+acddac
+acac
+abbbc
+abc
+c
+whwu@master:~/script> grep 'a.*c' 3.txt   #匹配a 任意个或零个字母  c
+acco
+acddac
+acac
+abbbc
+abc
+###################################################
+
+
+######################区间表示符################
 whwu@master:~/script> cat 3.txt
 booka google
 cooc
@@ -91,8 +124,11 @@ bok
 whwu@master:~/script> grep 'o\{3,4\}' 3.txt    #\{n,m}\ 区间表达式，匹配再它前面的单个字符重现的次数区间n次-m次，也可以是[a-z]\{3,4\}表示3-4个字母，见下例。
 coookaab
 boooook
+##################################################
 
-################\(  \)保留空间的运用###########
+
+
+################\(  \)保留空间以及后向引用的运用###########
 whwu@master:~/script> cat 3.txt
 accoacco
 acco
