@@ -193,6 +193,52 @@ acac
 ###########################################
 
 
+###############ERE（扩展正则表达式）以及交替##############
+whwu@master:~/script> cat 3.txt
+The computer is nice
+the CPU is good
+The CPU is cool
+my computer is bad
+the cpu is good
+whwu@master:~/script> grep '[Tt]he (CPU|computer) is' 3.txt   #必须用ERE
+whwu@master:~/script> egrep '[Tt]he (CPU|computer) is' 3.txt  #括号中|表示或
+The computer is nice
+the CPU is good
+The CPU is cool
+whwu@master:~/script> cat 4.txt
+ab1234cd
+abcd
+absdfacd
+ab
+cd
+whwu@master:~/script> grep '^ab' 4.txt  #正则表达式 匹配ab开头的行
+ab1234cd
+abcd
+absdfacd
+ab
+whwu@master:~/script> egrep '^ab' 4.txt #扩展正则表达式也可以
+ab1234cd
+abcd
+absdfacd
+ab
+whwu@master:~/script> egrep '^ab|cd$' 4.txt  #扩展正则表达式匹配ab开头或cd结尾的行
+ab1234cd
+abcd
+absdfacd
+ab
+cd
+whwu@master:~/script> grep '^ab|cd$' 4.txt  #正则表达式不可以
+
+whwu@master:~/script> egrep '^(ab|cd)$' 4.txt  #匹配一行为ab或cd
+ab
+cd
+#################################################################
+
+
+
+
+
+
 
 ######有问题#######
 whwu@master:~/script> grep "google" . -r --include *.txt      # -r的意思是递归的对目录下的所有文件(包括子目录)进行搜索  --include *.txt表示txt文件  .{cc,ccp}表示.c和.ccp文件
