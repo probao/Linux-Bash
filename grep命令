@@ -78,6 +78,86 @@ whwu@master:~/script> grep -e "google" -e "shell" 1.txt       # -e grep匹配多
 book google
 i lovae shell book apple
 
+whwu@master:~/script> cat 3.txt
+booka google
+cooc
+aba
+acddca
+cookab
+coookaab
+baidu bookxix
+boooook
+bok
+whwu@master:~/script> grep 'o\{3,4\}' 3.txt    #\{n,m}\ 区间表达式，匹配再它前面的单个字符重现的次数区间n次-m次，也可以是[a-z]\{3,4\}表示3-4个字母，见下例。
+coookaab
+boooook
+
+################\(  \)保留空间的运用###########
+whwu@master:~/script> cat 3.txt
+accoacco
+acco
+acddac
+acac
+acdac
+accocoac
+coookaab
+baidu bookxix
+boooook
+bok
+whwu@master:~/script> grep '\(ac\).*\1' 3.txt   #将\(与\)间的模式储存在特殊的保留空间，最多可以是9个
+accoacco
+acddac
+acac
+acdac
+accocoac
+whwu@master:~/script> grep '\(ac\)\(co\)\2\1' 3.txt  #两个保留空间
+accocoac
+#####################################################
+
+
+##################+号的运用##############
+whwu@master:~/script> cat 3.txt
+1234
+acco
+acddac
+acac
+4567
+6543
+12
+whwu@master:~/script> grep '[a-z]\+' 3.txt  #注意转译符\ 匹配任意个字母
+acco
+acddac
+acac
+whwu@master:~/script> grep '[1-9]\+' 3.txt  #匹配任意个数字
+1234
+4567
+6543
+12
+#############################################
+
+
+##################字符集的运用##############
+whwu@master:~/script> cat 3.txt
+1234
+acco
+acddac
+acac
+4567
+6543
+12
+whwu@master:~/script> grep '[[:digit:]]' 3.txt   #匹配数字
+1234
+4567
+6543
+12
+whwu@master:~/script> grep '[[:alpha:]]' 3.txt  #匹配字母
+acco
+acddac
+acac
+###########################################
+
+
+
 ######有问题#######
 whwu@master:~/script> grep "google" . -r --include *.txt      # -r的意思是递归的对目录下的所有文件(包括子目录)进行搜索  --include *.txt表示txt文件  .{cc,ccp}表示.c和.ccp文件
 ./1.txt:book google
