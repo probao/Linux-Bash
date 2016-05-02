@@ -112,6 +112,32 @@ i love shell BOOK
 whwu@master:~/script> sed 's/book/books/g' 3.txt #替换文件中每一个book
 
 
+#######################不同定界符####################
+whwu@master:~/script> sed -n '/whwu/ s//WWH/p' /etc/passwd
+WWH:x:519:519::/home/whwu:/bin/bash
+whwu@master:~/script> sed -n '\:whwu: s;;WWH;p' /etc/passwd
+WWH:x:519:519::/home/whwu:/bin/bash
+whwu@master:~/script> sed -n '\:whwu: s;;WWH;p' /etc/passwd   #转译符\
+#####################################################
+
+
+#######################匹配的范围#######################
+whwu@master:~/script> echo Tolstoy is wordly | sed 's/T.*y/Camus/'  #sed匹配最长的字符
+Camus
+Tolstoy is wordly
+whwu@master:~/script> echo Tolstoy is wordly | sed 's/T[[:alpha:]]*y/Camus/'  
+Camus is wordly
+
+whwu@master:~/script> echo abc | sed 's/b*/1/'  #b*匹配 空字符 1个b 或多个b 匹配第一个也就是空字符
+1abc
+whwu@master:~/script> echo abc | sed 's/b*/1/g'
+1a1c1
+whwu@master:~/script> echo abc | sed 's/d*/1/g'
+1a1b1c1
+##########################################################
+
+
+
 ######删除操作：d命令#######
 whwu@master:~/script> cat 3.txt
 bookgoogle
