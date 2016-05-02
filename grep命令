@@ -232,6 +232,25 @@ whwu@master:~/script> grep '^ab|cd$' 4.txt  #正则表达式不可以
 whwu@master:~/script> egrep '^(ab|cd)$' 4.txt  #匹配一行为ab或cd
 ab
 cd
+
+whwu@master:~/script> cat 3.txt
+The computer is nice
+bananacom
+com
+lolcomdota
+the CPU is good
+The CPU is cool
+my computer is bad
+the cpu is good
+whwu@master:~/script> grep '\<com' 3.txt  #匹配com开头的单词
+The computer is nice
+com
+my computer is bad
+whwu@master:~/script> grep 'com\>' 3.txt  #匹配以com结尾的单词
+bananacom
+com
+whwu@master:~/script> grep '\<com\>' 3.txt #匹配单个单词com
+com
 #################################################################
 
 
