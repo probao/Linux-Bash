@@ -12,6 +12,26 @@ sed '/used/! s/new/used/g' filename    #find lines not containing used
 sed '/^#/d' filename | sort > filename.sorted	#find lines containg # at the beginning 
 						#then delet
 
+whwu@master:~/script> cat 3.txt
+The computer is nice
+aaaaaaaaaaaa competer
+bananacom fafa The
+whwu@master:~/script> sed 's/^/mkdir /' 3.txt    #在每行前加一个mkdir
+mkdir The computer is nice
+mkdir aaaaaaaaaaaa competer
+mkdir bananacom fafa The
+whwu@master:~/script> sed '/The/ s/^/mkdir /' 3.txt   #在含The的行前加一个mkdir
+mkdir The computer is nice
+aaaaaaaaaaaa competer
+mkdir bananacom fafa The
+whwu@master:~/script> sed '/^The/ s/^/mkdir /' 3.txt   #在行首含The的行前加一个mkdir
+mkdir The computer is nice
+aaaaaaaaaaaa competer
+bananacom fafa The
+
+
+
+
 sed是一种流编辑器，它是文本处理中非常中的工具，能够完美的配合正则表达式使用，功能不同凡响。
 处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），接着用sed命令处
 理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文
