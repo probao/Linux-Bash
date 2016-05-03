@@ -504,3 +504,27 @@ echo -e "%add_control_commands\n\$disp3\nADD END\n%end" >> turbo.in  #\$disp3 �
 
 
 
+################文字解密##############
+whwu@master:~/script> cat puzzle-help.sh
+#!/bin/bash
+#puzzle-help egrep-pattern [word-list-files]
+
+pattern="$1"
+
+egrep -h -i "$pattern" linux.words 2> /dev/null | sort -u -f
+whwu@master:~/script> ./puzzle-help.sh '^b.....[xz]...$'  #匹配字母开头是b，5个字母后是x或z 三个字母后结束
+Babelizing
+bamboozled
+bamboozler
+bamboozles
+baronizing
+Bellinzona
+Belshazzar
+bigamizing
+bilharzial
+Birobizhan
+botanizing
+Brontozoum
+Buitenzorg
+bulldozers
+bulldozing
