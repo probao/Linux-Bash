@@ -529,7 +529,7 @@ tr -cs "[A-Z][a-z]" "\n" |       # change the complement of letter to line break
     sort |                       # sort accoeding to letters
       uniq -c |                  # delete repeated words and show the number
         sort -k1,1nr -k2 |       # first sort according to number, large to small second sort in terms of letters
-          sed ${1:-25}q
+          sed ${1:-25}q          #如果$1不存在，则返回25.
 
 
 
