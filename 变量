@@ -240,3 +240,18 @@ haha
 haha
 1
 haha
+
+
+算术展开
+whwu@master:~/script> echo $((3>2))
+1
+whwu@master:~/script> echo $((3 && 2))
+1
+whwu@master:~/script> echo $(( (3>2) || (4<=1) ))
+1
+whwu@master:~/script> echo $((i++)) $i
+5 6
+whwu@master:~/script> echo $((++i)) $i
+7 7
+
+
