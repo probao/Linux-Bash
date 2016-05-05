@@ -126,3 +126,117 @@ $$：当前shell进程的pid
 $!：后台运行的最后一个进程的pid
 $-：显示shell使用的当前选项
 $_：之前命令的最后一个参数
+
+参数展开
+whwu@master:~/script> cat para_ex.sh
+#!/bin/bash
+
+a="1"			#将值储存在a中
+for((i=1;i<=5;i++))
+do
+        echo $a         #显示变量a
+        sleep 10        #等待10秒钟
+done
+
+展开运算符
+${ varname:-word}   #如果varname存在且非null，则返回其值；否则，返回word
+#! /bin/sh
+
+tr -cs "[A-Z][a-z]" "\n" |       # change the complement of letter to line break and delete continuous lines
+  tr "[A-Z]" "[a-z]"|            # change upper to lower
+    sort |                       # sort accoeding to letters
+      uniq -c |                  # delete repeated words and show the number
+        sort -k1,1nr -k2 |       # first sort according to number, large to small second sort in terms of letters
+          sed ${1:-25}q
+
+whwu@master:~/script> cat para_ex.sh
+#!/bin/bash
+
+a="1"
+for((i=1;i<=3;i++))
+do
+        echo $a
+        echo ${b:-haha}      #变量b没有定义，则显示haha
+done
+whwu@master:~/script> ./para_ex.sh
+1
+haha
+1
+haha
+1
+haha
+
+
+
+${varname:=word}	#如果varname存在且不是null，则返回它的值；否则，设置它为word，并返回其值，类似${varname:-word}
+
+${varname:?message      #如果varname存在且非null，则返回它的值；否则，显示varname：message，并退出当前的命令或脚本
+whwu@master:~/script> cat para_ex.sh   #变量存在且非null
+#!/bin/bash
+
+a="1"
+b="2"
+for((i=1;i<=3;i++))
+do
+        echo $a
+        echo ${b:?"haha"}
+done
+
+whwu@master:~/script> ./para_ex.sh
+1
+2
+1
+2
+1
+2
+whwu@master:~/script> cat para_ex.sh   #变量不存在
+#!/bin/bash
+
+a="1"
+for((i=1;i<=3;i++))
+do
+        echo $a
+        echo ${b:?"haha"}
+done
+
+whwu@master:~/script> ./para_ex.sh
+1
+./para_ex.sh: line 7: b: haha
+
+
+${varname:+word}   #如果varname存在且非null，则返回word；否则，返回null
+
+whwu@master:~/script> cat para_ex.sh    #变量b不存在，返回null
+#!/bin/bash
+
+a="1"
+for((i=1;i<=3;i++))
+do
+        echo $a
+        echo ${b:+"haha"}
+done
+whwu@master:~/script> ./para_ex.sh
+1
+
+1
+
+1
+
+whwu@master:~/script> cat para_ex.sh   #变量b存在，返回haha
+#!/bin/bash
+
+a="1"
+b="2"
+for((i=1;i<=3;i++))
+do
+        echo $a
+        echo ${b:+"haha"}
+done
+
+whwu@master:~/script> ./para_ex.sh
+1
+haha
+1
+haha
+1
+haha
