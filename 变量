@@ -282,3 +282,4 @@ whwu@master:~/script> ./exit.sh 45
 haha
 whwu@master:~/script> echo $?
 12
+
