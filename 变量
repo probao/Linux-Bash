@@ -255,3 +255,30 @@ whwu@master:~/script> echo $((++i)) $i
 7 7
 
 
+退出状态
+每一条命令，不管是内置的、shell函数，还是外部的，当它退出时，都会返回一个小的整数
+值给引用它的程序，这就是程序的退出状态。0表示成功，也就是程序执行完成且未遭遇任何
+问题。其他任何的退出状态都为失败。内置变量$?访问它。
+
+whwu@master:~> ls 10nacl2.in
+10nacl2.in
+whwu@master:~> echo $?
+0
+whwu@master:~> ls 10nacl2.abc
+ls: cannot access 10nacl2.abc: No such file or directory
+whwu@master:~> echo $?
+2
+
+exit命令
+语法： exit [exit-value]  #从shell脚本返回一个退出状态给脚本的调用者。
+whwu@master:~/script> cat exit.sh
+#!/bin/bash
+
+if [ "$1" -ne "2" ];then
+        echo "haha"
+        exit 12
+fi
+whwu@master:~/script> ./exit.sh 45
+haha
+whwu@master:~/script> echo $?
+12
