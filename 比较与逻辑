@@ -267,3 +267,101 @@ ok
 注意：[[]] 运算符只是[]运算符的扩充。能够支持<,>符号运算不需要转义符，它还是以字符串比较大小。里面支持逻辑运算符：|| && 
 
 
+test命令
+test 命令最短的定义可能是评估一个表达式；如果条件为真，则返回一个 0 值。如果表达式不为真，
+则返回一个大于 0 的值 — 也可以将其称为假值。检查最后所执行命令的状态的最简便方法是使用 $? 值。
+
+
+test 和 [ 的语法如下：
+
+test expression
+
+[ expression ]
+
+在这两种情况下，test 都评估一个表达式，然后返回真或假。如果它和 if、while 或 until 命令结合使用，
+则您可以对程序流进行广泛的控制。不过，您无需将 test 命令与任何其它结构一起使用；您可以从命令行直
+接运行它来检查几乎任何东西的状态。
+test命令用法。功能：检查文件和比较值
+ 　　1）判断表达式
+ 　　if test  (表达式为真)
+　　if test !表达式为假
+ 　　test 表达式1 –a 表达式2                  两个表达式都为真
+ 　　test 表达式1 –o 表达式2                 两个表达式有一个为真
+ 　　2）判断字符串
+ 　　test –n 字符串                                   字符串的长度非零
+ 　　test –z 字符串                                    字符串的长度为零
+ 　　test 字符串1＝字符串2                    字符串相等
+ 　　test 字符串1！＝字符串2               字符串不等
+ 　　3）判断整数
+ 　　test 整数1 –eq 整数2                        整数相等
+ 　　test 整数1 –ge 整数2                        整数1大于等于整数2
+　　test 整数1 –gt 整数2                         整数1大于整数2
+　　test 整数1 –le 整数2                         整数1小于等于整数2
+　　test 整数1 –lt 整数2                          整数1小于整数2
+　　test 整数1 –ne 整数2                        整数1不等于整数2
+　　4）判断文件
+ 　　test  File1 –ef  File2　　　　　　　　两个文件具有同样的设备号和i结点号
+ 　　test  File1 –nt  File2　　　　　　　　文件1比文件2 新
+ 　　test  File1 –ot  File2　　　　　　　　文件1比文件2 旧
+ 　　test –b File　　　　　　　　文件存在并且是块设备文件
+ 　　test –c File　　　　　　　　文件存在并且是字符设备文件
+ 　　test –d File　　　　　　　　文件存在并且是目录
+ 　　test –e File　　　　　　　　文件存在
+ 　　test –f File 　　　　　　　　文件存在并且是正规文件
+ 　　test –g File　　　　　　　　文件存在并且是设置了组ID
+　　test –G File　　　　　　　　文件存在并且属于有效组ID
+　　test –h File　　　　　　　　文件存在并且是一个符号链接（同-L）
+ 　　test –k File　　　　　　　　文件存在并且设置了sticky位
+ 　　test –b File　　　　　　　　文件存在并且是块设备文件
+ 　　test –L File　　　　　　　　文件存在并且是一个符号链接（同-h）
+ 　　test –o File　　　　　　　　文件存在并且属于有效用户ID
+　　test –p File　　　　　　　　文件存在并且是一个命名管道
+ 　　test –r File　　　　　　　　文件存在并且可读
+ 　　test –s File　　　　　　　　文件存在并且是一个套接字
+ 　　test –t FD　　　　　　　　文件描述符是在一个终端打开的
+ 　　test –u File　　　　　　　　文件存在并且设置了它的set-user-id位
+ 　　test –w File　　　　　　　　文件存在并且可写
+ 　　test –x File　　　　　　　　文件存在并且可执行
+
+whwu@master:~/script> cat compare.sh
+#!/bin/bash
+
+echo "please enter two number"
+read a
+read b
+if test $a -eq $b       # test expression
+then
+        echo "No.1 = No.2"
+elif [ $a -gt $b ]      # [ expression ]
+then
+        echo "No.1 > No.2"
+else
+        echo "No.1 < No.2"
+fi
+whwu@master:~/script> ./compare.sh
+please enter two number
+1
+5
+No.1 < No.2
+whwu@master:~/script>
+
+
+whwu@master:~/script> cat check_file.sh
+#!/bin/bash
+
+echo "Enter a file name"
+read a
+if [ -f $a ]
+then
+        echo " the file is exist!"
+else
+        echo " the file is not exist!"
+fi
+whwu@master:~/script> ./check_file.sh
+Enter a file name
+2.txt
+ the file is exist!
+whwu@master:~/script> ./check_file.sh
+Enter a file name
+iu
+ the file is not exist!
