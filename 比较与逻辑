@@ -365,3 +365,60 @@ whwu@master:~/script> ./check_file.sh
 Enter a file name
 iu
  the file is not exist!
+
+
+case语句
+case语句适用于需要进行多重分支的应用情况。 
+
+        case分支语句的格式如下：
+
+            case $变量名 in
+
+                模式1）
+
+            命令序列1
+
+            ;;
+
+                模式2）
+
+            命令序列2
+
+         ;; 
+
+                *）
+
+            默认执行的命令序列     ;; 
+
+            esac 
+
+        case语句结构特点如下：
+
+        case行尾必须为单词“in”，每一个模式必须以右括号“）”结束。
+
+        双分号“;;”表示命令序列结束。
+
+
+whwu@master:~/script> cat case.sh
+#!/bin/bash
+
+read -p "press some key, then press return:" KEY
+case $KEY in
+[a-z][A-Z])
+echo "It's a letter."
+;;
+[0-9])
+echo "It's a digit."
+;;
+*)
+echo "It's function keys, spacebar or other keys."
+;;
+esac
+whwu@master:~/script> ./case.sh
+press some key, then press return:4
+It's a digit.
+whwu@master:~/script> ./case.sh
+press some key, then press return:[
+It's function keys, spacebar or other keys.
+
+
