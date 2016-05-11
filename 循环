@@ -11,6 +11,108 @@ for((i=0;i<10;i++))
 	commands;
 }
 
+###############for_example1.sh##############
+whwu@master:~/script/test> ls
+1.txt  2.txt  3.txt  addfile.sh  for_example1.sh
+whwu@master:~/script/test> cat for_example1.sh
+#!/bin/bash
+
+for i in *.txt
+do
+        echo $i
+        mv $i $i.old
+        sed 's/WWH/123/g' < $i.old >$i
+done
+whwu@master:~/script/test> cat 1.txt
+WWH google
+baidu WWH WWH
+i lovae shell WWH apple
+haha
+whwu@master:~/script/test> ls
+1.txt      2.txt      3.txt      addfile.sh
+1.txt.old  2.txt.old  3.txt.old  for_example1.sh
+whwu@master:~/script/test> cat 1.txt
+123 google
+baidu 123 123
+i lovae shell 123 apple
+haha
+
+
+###############数字段形式###############
+whwu@master:~/script/test> cat for_example2.sh
+#!/bin/bash
+
+for i in {1..10}
+do
+        let i++
+        echo $i
+done
+whwu@master:~/script/test> ./for_example2.sh
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+
+
+
+###############对存在的文件进行循环###############
+whwu@master:~/script/test> cat for_example3.sh
+#!/bin/bash
+
+#for shname in *.txt
+for shname in `ls *.txt`
+do
+        name=`echo "$shname" | awk  -F. '{print $1}'`
+        echo $name
+done
+whwu@master:~/script/test> ./for_example3.sh
+1
+2
+3
+
+
+###############对存在的文件进行循环###############
+whwu@master:~/script/test> cat for_example4.sh
+#!/bin/bash
+
+for i in `seq 50`	  #` `中的命令结果
+do
+        if((i%3==0))
+        then
+                echo $i
+                continue
+        fi
+done
+whwu@master:~/script/test> ./for_example4.sh
+3
+6
+9
+12
+15
+18
+21
+24
+27
+30
+33
+36
+39
+42
+45
+48
+
+
+
+
+
+
+
 
 while循环
 while condition
