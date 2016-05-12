@@ -136,3 +136,61 @@ do
 	let x++; #;不一定要
 	echo $x;
 done
+
+whwu@master:~/script/test> cat while_example.sh
+#!/bin/bash
+
+min=1
+max=20
+while [ $min -le $max ]
+do
+        echo $min
+#       let min++
+        min=`expr $min + 1`
+done
+whwu@master:~/script/test> ./while_example.sh
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+
+
+whwu@master:~/script/test> cat while_example2.sh
+#!/bin/bash
+
+i=1
+while(($i<20))
+do
+        if(($i%4==0))
+        then
+                echo $i
+        fi
+        i=$(($i+1))
+done
+whwu@master:~/script/test> ./while_example2.sh
+4
+8
+12
+16
+
+
+# 三.循环控制语句 
+# break 命令不执行当前循环体内break下面的语句从当前循环退出. 
+# continue 命令是程序在本循体内忽略下面的语句,从循环头开始执行
+
