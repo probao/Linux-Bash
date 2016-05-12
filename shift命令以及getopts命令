@@ -1,6 +1,8 @@
 ################################################
 ############shift命令以及getopts命令############
 ################################################
+
+shift命令
 位置参数可以用shift命令左移。比如shift 3表示原来的$4现在变成$1，原来的$5现在变成$2等等，
 原来的$1、$2、$3丢弃，$0不移动。不带参数的shift命令相当于shift 1。
 非常有用的 Unix 命令:shift。我们知道，对于位置变量或命令行参数，其个数必须是确定的，或者
@@ -46,3 +48,55 @@ whwu@master:~/script/test> ./shift_example2.sh
 ./shift_example2.sh: line 5: echo you should input data.: command not found
 whwu@master:~/script/test> ./shift_example2.sh 1 2 3
 sum is:6
+
+
+
+getopts命令
+
+getopts: getopts optstring name [arg]
+OPTIND：getopts使用OPTIND作为索引，来处理下一个需要处理的参数，记录当前的状态。
+OPTARG：在上面的循环中，a，b两个参数后面各有一个冒号，冒号表示该输入的参数后面
+还有一个参数值，当getopts发现冒号后，会处理用户输入的参数值，这个参数值被保存在OPTARG中。
+OPTSTRING：也就是上例中的 :a:b:cdefg，getopts需要处理的参数。注意，最前面的冒号“：”用于
+指定getopts工作于silent mode，在silent模式下，当用户输入的参数不满足OPTSTRING时，不会讲
+illegal option这样的错误信息打印出来，使代码看起来更加专业。如果想要工作在verbose模式下，
+可以去掉最前面的冒号。
+
+whwu@master:~/script/test> cat getopts_example1.sh
+#!/bin/bash
+
+secs=0
+minutes=0
+hours=0
+days=0
+process=0
+
+while getopts :s:m:h:d:p TIMED 2>/dev/null
+do
+        case $TIMED in
+        s) secs=$OPTARG
+        ;;
+        m) ((minutes=$OPTARG*60))
+        ;;
+        h)((hours=$OPTARG*3600))
+        ;;
+        d)((days=$OPTARG*86400))
+        ;;
+        p)PROCESS=$OPTARG
+        ;;
+        ?)usage
+        exit
+        ;;
+        esac
+done
+((totalsecs=$secs+$minutes+$hours+$days))
+echo "$totalsecs"
+
+whwu@master:~/script/test> ./getopts_example1.sh -s 20 -m 3
+200
+
+
+
+
+
+
