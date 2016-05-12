@@ -1,0 +1,48 @@
+################################################
+############shift命令以及getopts命令############
+################################################
+位置参数可以用shift命令左移。比如shift 3表示原来的$4现在变成$1，原来的$5现在变成$2等等，
+原来的$1、$2、$3丢弃，$0不移动。不带参数的shift命令相当于shift 1。
+非常有用的 Unix 命令:shift。我们知道，对于位置变量或命令行参数，其个数必须是确定的，或者
+当 Shell 程序不知道其个数时，可以把所有参数一起赋值给变量$*。若用户要求 Shell 在不知道位
+置变量个数的情况下，还能逐个的把参数一一处理，也就是在 $1 后为 $2,在 $2 后面为 $3 等。在
+shift 命令执行前变量 $1 的值在 shift 命令执行后就不可用了。
+
+
+
+whwu@master:~/script/test> cat shift_example1.sh
+#!/bin/bash
+
+until [ $# -eq 0 ]
+do
+        echo "the first number:$1, amount:$#"
+        shift
+done
+whwu@master:~/script/test> ./shift_example1.sh 1 2 4 3
+the first number:1, amount:4
+the first number:2, amount:3
+the first number:4, amount:2
+the first number:3, amount:1
+
+
+
+whwu@master:~/script/test> cat shift_example2.sh
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+        echo" you should input data."
+        exit 1
+fi
+
+sum=0
+until [ $# -eq 0 ]
+do
+        sum=` expr $sum + $1`
+        shift
+done
+echo "sum is:$sum"
+whwu@master:~/script/test> ./shift_example2.sh
+./shift_example2.sh: line 5: echo you should input data.: command not found
+whwu@master:~/script/test> ./shift_example2.sh 1 2 3
+sum is:6
