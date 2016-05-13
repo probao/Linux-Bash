@@ -1,0 +1,107 @@
+################################################
+###############函数以及return命令###############
+################################################
+
+
+一、Shell中函数的定义
+
+为了方便程序和管理和模块化并减少代码的重复，函数的确是一个好东西。而Shell中函数的定义有两种方法，如下：
+function fname()
+{
+statements；
+}
+或
+fname()
+{
+statements;
+}
+注意，()内是没有参数的，它并不像C语言那样，在()里可以有参数。
+
+
+先来说说这个程序的功能吧，就是输入一个数字n，然后从0开始每隔1秒输入一个数字，直到输出n-1为止。
+首先，程序会要求你输入一个数学，然后调用函数来进行输出的功能。
+whwu@master:~/script/test> cat function_example1.sh
+#!/bin/bash
+
+
+function loopprint()
+{
+        count=0;
+        while [ $count -lt $1 ]
+        do
+                echo $count
+                let ++count
+        done
+        return 0
+}
+
+read -p "Please input the times of print you want:" n;
+loopprint $n
+echo $?
+whwu@master:~/script/test> ./function_example1.sh
+Please input the times of print you want:6
+0
+1
+2
+3
+4
+5
+0
+
+阶乘
+whwu@master:~/script/test> cat function_example2.sh
+#!/bin/bash
+
+function factorial ()
+{
+        factorial=1
+        for((i=1;i<=$1;i++))
+                do
+                factorial=$[$factorial*$i]
+                done
+        echo "$1 factorial is $factorial"
+}
+
+factorial $1
+whwu@master:~/script/test> ./function_example2.sh 5
+5 factorial is 120
+
+
+return命令
+语法
+	return [ exit-value ]
+用途
+	返回由shell函数得到的退出值给调用它的脚本。
+
+whwu@master:~/script/test> cat return_example.sh
+#!/bin/bash
+
+function fun1 ()
+{
+        read -p "enter a:" a
+        echo -n "print 2a:"
+        return $[$a*2]
+}
+fun1
+echo "return value $?"
+
+whwu@master:~/script/test> ./return_example.sh
+enter a:12
+print 2a:return value 24
+whwu@master:~/script/test> ./return_example.sh   #由于shell状态码最大是255，所以当返回值大于255时会出错。
+enter a:200
+print 2a:return value 144
+whwu@master:~/script/test>
+
+[~/shell/function]# cat ./fun_out.sh 
+ #!/bin/bash
+ function fun2 {
+   read -p "enter a: " a
+   echo -n "print 2a: "
+   echo $[ $a * 2 ]
+ }
+ result=`fun2`                                  #为了返回大于255的数、浮点数和字符串值，最好用函数输出到变量：
+ echo "return value $result"
+ [~/shell/function]# ./fun_out.sh      
+ enter a: 400
+ return value print 2a: 800
