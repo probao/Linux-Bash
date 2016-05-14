@@ -132,6 +132,97 @@ Enter your name:bai
 hello bai, welcome to my program
 
 
+-p参数
+由于read命令提供了-p参数，允许在read命令行中直接指定一个提示。
+whwu@master:~/script/test> cat read_example2.sh
+#!/bin/bash
+
+read -p "Enter your name:" name
+
+echo "hello $name, weclome to my program"
+
+exit 0
+whwu@master:~/script/test> ./read_example2.sh
+Enter your name:bao
+hello bao, weclome to my program
+
+
+-t参数
+-t参数给用户的输入做限时规定。若超出-t参数后所规定的时间值后，
+脚本将终止用户的输入，可单独使用也可和其它参数配合连用。
+whwu@master:~/script/test> cat read_example3.sh
+#!/bin/bash
+
+TIP="Input your information(name and sex):"
+read -t 10 -p "$TIP" name sex
+echo $name
+echo $sex
+whwu@master:~/script/test> ./read_example3.sh
+Input your information(name and sex):bao male
+bao
+male
+whwu@master:~/script/test> ./read_example3.sh    #10秒内没有输入
+Input your information(name and sex):
+
+whwu@master:~/script/test>
+
+
+
+
+-n参数
+参数-n规定read后面的变量所接收的字符个数。只要在shell界面输入到-n所规定的字符数之后，shell变量立即被赋值。
+whwu@master:~/script/test> cat read_example4.sh
+#!/bin/bash
+
+TIP="Input your information:"
+read  -n 5 -p "$TIP" name
+echo $name
+whwu@master:~/script/test> ./read_example4.sh
+Input your information:12
+12
+whwu@master:~/script/test> ./read_example4.sh
+Input your information:1234512345
+
+
+
+-s参数
+有时会需要脚本用户输入，但不希望输入的数据显示在监视器上。如用户密码等。
+-s选项能够使read命令中输入的数据不显示在监视器上（实际上，数据是显示的，只是read命令将文本颜色设置成与背景相同的颜色）。
+whwu@master:~/script/test> cat read_example5.sh
+#!/bin/bash
+
+TIP="Input your infrmation:"
+read -s -p "$TIP" name
+echo ""
+echo $name
+whwu@master:~/script/test> ./read_example5.sh
+Input your infrmation:
+qwe
+
+
+shell read 命令除可以从标准输入流中读取字符串给变量外，还能从特定的文件中向变量赋值文件中的“一行内容”。
+每次给变量赋值为管道内容的输入的行内容。
+whwu@master:~/script/test> cat read_example6.sh
+#!/bin/bash
+
+countnum=1
+
+cat 1.txt | while read line
+do
+        echo "$countnum line content: $line"
+        countnum=$[ $countnum + 1]
+done
+whwu@master:~/script/test> ./read_example6.sh
+1 line content: 123 google
+2 line content: baidu 123 123
+3 line content: i lovae shell 123 apple
+4 line content: haha
+
+
+http://blog.csdn.net/liuxincumt/article/details/6202295
+
+
+
 
 
 
