@@ -1,0 +1,18 @@
+
+
+文件重定向
+使用program << delimiter, 可以在shell脚本正文内提供输入数据。
+这样的数据叫做嵌入文件（here document）。默认情况下，shell可以在
+嵌入文件正文内做变量、命令和算术替换。
+whwu@master:~/script/test> ./EOF_example.sh
+this is the value of i: 5
+Here is a command substitution:hello,world
+whwu@master:~/script/test> cat EOF_example.sh
+#!/bin/bash
+
+i=5
+cat << EOF
+this is the value of i: $i
+Here is a command substitution:$(echo hello,world)
+EOF
+
