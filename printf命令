@@ -1,0 +1,133 @@
+printf命令的完整语法有两个部分：
+
+printf format-string [arguments...]
+
+第一部分为描述格式规格的字符串，用来描述输出的排列方式，最好为此字符串加上引号。此字符
+
+串包含按字面显示的字符以及格式声明，格式声明时特殊的占位符，用来描述如何显示相应的参数。
+
+第二部分是与格式声明相对应的参数列表，例如一系列的字符串或变量值。格式声明由两部分组成：
+
+百分比符号（%）和指示符。最常用的格式指示符有两个，%s用于字符串，而%d用于十进制整数。
+
+
+whwu@master:~/script/test> printf "The first program always print %s,%s\n" Hello Shell
+The first program always print Hello,Shell
+
+
+printf的转义序列
+
+序列                     说明
+
+\a                       警告字符，通常为ASCII的BEL字符
+\b                       后退
+\c                       抑制（不显示）输出结果中任何结尾的换行字符（只在%b格式指示符控制下的
+                         参数字符串中有效），而且，任何留在参数里的字符、任何接下来的参数以及
+                         任何留在格式字符串中的字符，都被忽略
+\f                       换页（formfeed）
+\n                       换行
+\r                       回车（Carriage return）
+\t                       水平制表符
+\v                       垂直制表符
+\\                       一个字面上的反斜杠字符
+\ddd                     表示1到3位数八进制值的字符。仅在格式字符串中有效
+\0ddd                    表示1到3位的八进制值字符
+
+
+printf格式指示符
+项目     说明
+%b           相对应的参数被视为含有要被处理的转义序列之字符串。
+%c           ASCII字符。显示相对应参数的第一个字符
+%d, %i       十进制整数
+%e           浮点格式
+%E           浮点格式
+%f           浮点格式
+%g           %e或%f转换，看哪一个较短，则删除结尾的零
+%G           %E或%f转换，看哪一个较短，则删除结尾的零
+%o           不带正负号的八进制值
+%s           字符串
+%u           不带正负号的十进制值
+%x           不带正负号的十六进制值，使用a至f表示10至15
+%X           不带正负号的十六进制值，使用A至F表示10至15
+%%            字面意义的%
+
+
+默认情况下，转义序列只在格式字符串中会被特别对待，也就是说，如果转义序列出现在参数列表
+的字符串中，将不会被解释
+
+whwu@master:~/script/test> printf "a string, no processing:<%s>\n" "A\nB"
+a string, no processing:<A\nB>
+
+当你使用%b格式指示符时，printf会解释参数字符串里的转义序列：
+whwu@master:~/script/test> printf "a string, no processing:<%b>\n" "A\nB"
+a string, no processing:<A
+B>
+whwu@master:~/script/test>
+
+
+whwu@master:~/script/test> printf "test\a"
+testwhwu@master:~/script/test>           #听到bell的声音
+
+
+
+\b     后退
+首先新建一个名为“printf_example1.sh”的文档，内容如下：
+whwu@master:~/script/test> cat printf_example1.sh
+#!/bin/bash
+printf "12345"
+sleep 1;
+printf "\b"
+sleep 1
+printf "2"
+sleep 1
+printf "\b"
+sleep 1
+printf "3"
+sleep 1
+printf "\n"
+whwu@master:~/script/test> ./printf_example1.sh    #先12345 然后光标向后移，再变成12342，最后变成12343
+12343
+
+
+\c    抑制（不显示）输出结果中任何结尾的换行字符（只在%b格式指示符控制下的
+      参数字符串中有效），而且，任何留在参数里的字符、任何接下来的参数以及
+      任何留在格式字符串中的字符，都被忽略
+      \c要与%b配合使用
+whwu@master:~/script/test> printf "123%b\n" "\c456"
+123whwu@master:~/script/test> printf "123%b\n" "\c456                                    
+whwu@master:~/script/test> printf "123%b\n" "456\c"
+123456whwu@master:~/script/test>
+
+whwu@master:~/script/test> printf "123%b\n" "456" "\c213"   #因为有两个参数，第二个没有说明就不处理
+123456
+
+123whwu@master:~/script/test> printf "123%s%b\n"  "\c213"   #后面如果还有参数则被忽略
+123\c213
+whwu@master:~/script/test>
+
+whwu@master:~/script/test> printf "123%s%b\n"  "\c213" "\c456"   #后面的那个"\c213"被忽略了
+123\c213whwu@master:~/script/test>
+
+123\c213whwu@master:~/script/test> printf "123%s\n%b\n"  "\c213" "\c456"   #这里多了个\n效果就不一样了
+123\c213
+
+
+############printf对齐以及精度############
+printf命令可用来指定输出字段的宽度以及进行对其操作。为实现此目的，接在%后
+面的格式表达式可采用三个可选用的修饰符（modifier）以及前置的格式指示符（
+format specifier）:
+     %flags width.precision format-specifier
+
+whwu@master:~/script/test> printf "|%10s|\n" hello    #右对齐
+|     hello|
+whwu@master:~/script/test> printf "|%-10s|\n" hello   #左对齐
+|hello     |
+
+whwu@master:~/script/test> printf "%.5d\n" 15
+00015
+whwu@master:~/script/test> printf "%.10s\n" "a very long string"
+a very lon
+whwu@master:~/script/test> printf "%.2f\n" 123.4567
+123.46
+whwu@master:~/script/test> printf "|%10.3G|\n" 12.3456 #右对齐10 3个有效数字
+|      12.3|
