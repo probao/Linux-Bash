@@ -8,3 +8,43 @@ do
         tr -d '\n' < $f >> big.txt
 done
 set +x                                     # set +x 关闭跟踪功能
+
+
+############命令替换##########
+命令替换是指shell执行命令并将命令替换部分替换为执行该命令后的结果
+
+命令替换的形式有两种。第一种是使用反引号--`。。。` 将要执行的命令框起来
+		      第二种是使用$( )  #$(cd /old/code/dir; echo *.c)
+
+for i in $(ls *.txt); do cat $i >> new.txt; done
+whwu@master:~/script/test> cat new.txt
+12
+123 google
+baidu 123 123
+i lovae shell 123 apple
+haha
+123 apple
+banana
+123a google
+cooc
+aba
+acddca
+cookab
+cookaab
+baidu 123xixi
+guogeo
+sohu apple
+Sohu
+i lovae shell 123 apple
+bok
+
+whwu@master:~/script/test> cat head.sh
+#!/bin/bash
+
+count=$(echo $1 | sed 's/^-//')
+shift
+sed ${count}q "$@"
+whwu@master:~/script/test> ./head.sh -3 new.txt
+12
+123 google
+baidu 123 123
