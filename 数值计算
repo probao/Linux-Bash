@@ -78,3 +78,22 @@ whwu@master:~/script> echo "100 13" | awk '{printf("%.3f\n",$1/$2)}'  #awk 在�
 whwu@master:~/script> echo "scale=3; 1/13" | bc  #bc 在进行浮点运算的时候需要指定小数点位数，否则默认为 0 
 .076
 
+
+expr命令
+whwu@master:~/script/test> cat expr_example.sh
+#!/bin/bash
+
+i=1
+while [ "$i" -le 5 ]
+do
+        echo i is $i
+        i=`expr $i + 1`
+done
+whwu@master:~/script/test> ./expr_example.sh
+i is 1
+i is 2
+i is 3
+i is 4
+i is 5
+
+
