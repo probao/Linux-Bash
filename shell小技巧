@@ -48,3 +48,35 @@ whwu@master:~/script/test> ./head.sh -3 new.txt
 12
 123 google
 baidu 123 123
+
+
+##########################################
+####################引用##################
+##########################################
+
+引用（quoting）是用来防止shell将某些你想要的东西解释成不同的意义。
+举例来说，如果你要命令接受含有meta字符的参数，如*或？，就必须将这些
+meta字符用引号引用起来
+
+反斜杠转义
+whwu@master:~/script/test> echo here is a real *
+here is a real 12.txt 1.txt 1.txt.old 2.txt 2.txt.old 3.txt 
+3.txt.old ab.txt addfile.sh a.txt EOF_example.sh expr_example.sh 
+for_example1.sh for_example2.sh for_example3.sh for_example4.sh 
+function_example1.sh function_example2.sh getopts_example1.sh 
+head.sh new.txt printf_example1.sh read_example1.sh read_example2.sh 
+read_example3.sh read_example4.sh read_example5.sh read_example6.sh 
+return_example.sh shift_example1.sh shift_example2.sh while_example2.sh while_example.sh
+whwu@master:~/script/test> echo here is a real \*
+here is a real *
+
+
+单引号
+whwu@master:~/script/test> echo 'here are some metacharacters: * ? [abc] ` $ \'
+here are some metacharacters: * ? [abc] ` $ \
+
+
+双引号
+whwu@master:~/script/test> echo "\$x is \"$x\". Here is some output:'$(echo Hello World)'"$x is "I am x". 
+Here is some output:'Hello World'
+whwu@master:~/script/test>
