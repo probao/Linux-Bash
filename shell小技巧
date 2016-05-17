@@ -80,3 +80,22 @@ here are some metacharacters: * ? [abc] ` $ \
 whwu@master:~/script/test> echo "\$x is \"$x\". Here is some output:'$(echo Hello World)'"$x is "I am x". 
 Here is some output:'Hello World'
 whwu@master:~/script/test>
+
+
+############################################
+###################More命令#################
+############################################
+
+
+
+
+
+
+
+
+
+##############################################
+##################command命令#################
+##############################################
+
+179-191没看懂
