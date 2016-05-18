@@ -533,3 +533,8 @@ tr -cs "[A-Z][a-z]" "\n" |       # change the complement of letter to line break
 
 
 
+
+
+
+
+
