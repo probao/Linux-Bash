@@ -1,0 +1,55 @@
+#!/bin/bash
+#name:find_file.sh
+#find files contains a keyword
+#write by baobao
+#2016.05.16
+
+echo -e "\nThis is a script to find all the files in a specified path contains a keyword!"
+
+echo -e "\nPlease input a keyword:"
+
+read key
+
+if [ "$key" -eq "" ]
+then
+        echo -e "keyword can not be null!\n"
+        exit 0
+fi
+
+keyword=$key
+
+echo -e "\nPlease input your specified path:"
+
+read dir
+
+test ! -d $dir && echo -e "The $dir is not exist in your system.\n\n" && exit 0
+
+echo -e "\n-----------You find files are:-----------\n"
+
+file_count=0
+
+file_list=`ls -R $dir 2>/dev/null | grep -v '^$'`
+
+for file_name in $file_list
+do
+        temp=`echo $file_name | sed 's/:.*$//g'`
+        if [ "$file_name" != "$temp" ];
+        then
+                cur_dir=$temp
+        else
+                file_type=`file $cur_dir/$file_name | grep "text"`
+                if [ "$file_type" != "" ];
+                then
+                        temp=`grep $keyword $cur_dir/$file_name 2>/dev/null`
+                        if [ "$temp" != "" ];
+                        then
+                                echo $cur_dir/$file_name
+                                let file_count++
+                        fi
+                fi
+        fi
+done
+
+echo -e "\n-------------------------------------"
+echo -e "\n\nFiles Total: $file_count"
+echo -e "\nFind Finished!\n"
