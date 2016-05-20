@@ -178,7 +178,7 @@ whwu@master:~/script> ./awk1.sh 4.txt
           FNR        当前输入文档的当前记录编号，尤其当有多个输入文档时有用
           NR        输入流的当前记录编号
           NF        当前记录的字段个数
-          FS        字段分隔符
+          FS        字段分隔符，默认为空格
           OFS        输出字段分隔符，默认为空格
           ORS        输出记录分隔符，默认为换行符\n
            RS        输入记录分隔符，默认为换行符\n
@@ -588,6 +588,86 @@ Bunny
 Troll
 Tansley
 
+##################################
+#############awk 数组##############
+###################################
+awk数组是类似于一个键值对，既可以使用数字做下标，也可以使用字符串做下标
+
+whwu@master:~/script/test> array=(1 2 3 4)
+whwu@master:~/script/test> echo ${#array[@]}       #数组元素个数
+4
+
+
+###得到数组长度###
+whwu@master:~/script> awk 'BEGIN{info="it is a test";lens=split(info,tA," ");print length(tA),lens;}'                  
+4 4
+
+
+###输出数组内容###
+whwu@master:~/script> awk 'BEGIN{info="it is a test";split(info,M," ");for(k in M){print k,M[k]}}'
+4 test
+1 it
+2 is
+3 a
+
+# for…in 输出，因为数组是关联数组，默认是无序的。所以通过for…in 得到是无序的数组。
+
+
+whwu@master:~/script> awk 'BEGIN{info="it is a test";num=split(info,M," ");for(i=1;i<=num;i++){print i,M[i]}}'  # 如果需要得到有序数组，需要通过下标获得。
+1 it
+2 is
+3 a
+4 test
+
+
+###判断键值存在以及删除键值###
+whwu@master:~/script> awk 'BEGIN{M["a"]="a1";M["b"]="b1";M["c"]="c1";if("c" in M){print "ok"};for(k in M){print k,M[k]}}'
+ok
+a a1
+b b1
+c c1
+
+whwu@master:~/script> awk 'BEGIN{M["a"]="a1";M["b"]="b1";if("c" in M){print "ok"};for(k in M){print k,M[k]}}'          
+a a1
+b b1
+
+###删除键值###
+whwu@master:~/script> awk 'BEGIN{M["a"]="a1";M["b"]="b1";M["c"]="c1";delete M["a"];for(k in M){print k,M[k]}}'
+b b1
+c c1
+
+
+###二维数组###
+whwu@master:~/script/test> cat awk_example.sh
+#!/bin/bash
+
+awk 'BEGIN{
+        for(i=1;i<=4;i++)
+        {
+                for(j=1;j<=4;j++)
+                {
+                        arr[i,j]=i*j
+                        print i,"*",j"=",arr[i,j]
+                }
+        }
+}'
+whwu@master:~/script/test> ./awk_example.sh
+1 * 1= 1
+1 * 2= 2
+1 * 3= 3
+1 * 4= 4
+2 * 1= 2
+2 * 2= 4
+2 * 3= 6
+2 * 4= 8
+3 * 1= 3
+3 * 2= 6
+3 * 3= 9
+3 * 4= 12
+4 * 1= 4
+4 * 2= 8
+4 * 3= 12
+4 * 4= 16
 
 
 
