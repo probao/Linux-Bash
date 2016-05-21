@@ -689,3 +689,8 @@ two
 three
 whwu@master:~/script> echo 'one two three four' | awk '{ OFS="\n"; print $0 }'   #改变输出字段分隔字符而没有指定任何字段，不会改变$0
 one two three four
+
+whwu@master:~/script> cat 2.txt                                                            
+ba
+whwu@master:~/script> cat 2.txt | awk '{ C = length($0)+1; W += NF }END { print NR, W, C }'   #C包含了字符长度和换行符
+1 1 3
