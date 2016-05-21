@@ -670,4 +670,22 @@ whwu@master:~/script/test> ./awk_example.sh
 4 * 4= 16
 
 
+##################
+####记录与字段####
+##################
+whwu@master:~/script> echo '  un deux trois ' | awk -F' ' '{ print NF ":" $0 }'
+3:  un deux trois
+whwu@master:~/script> echo '  un deux trois  ' | awk -F'[ ]' '{ print NF ":" $0 }' #前置与结尾的空白不会再被忽略
+7:  un deux trois
 
+
+whwu@master:~/script> echo 'one two three four' | awk '{ print $1, $2, $3 }'
+one two three
+whwu@master:~/script> echo 'one two three four' | awk '{ OFS="..."; print $1, $2, $3 }'
+one...two...three
+whwu@master:~/script> echo 'one two three four' | awk '{ OFS="\n"; print $1, $2, $3 }'
+one
+two
+three
+whwu@master:~/script> echo 'one two three four' | awk '{ OFS="\n"; print $0 }'   #改变输出字段分隔字符而没有指定任何字段，不会改变$0
+one two three four
