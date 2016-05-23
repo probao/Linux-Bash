@@ -772,3 +772,145 @@ whwu@master:~/script/test> awk '/2|4/ { print FILENAME ":" FNR ":" $0 }' 2.txt
 2.txt:4:4 7
 2.txt:7:7 2
 
+
+whwu@master:~/script/test> cat 3.txt
+123a google
+cooc
+aba
+acddca
+cookab
+cookaab
+baidu 123xixi
+guogeo
+sohu apple
+Sohu
+i lovae shell 123 apple
+bok
+whwu@master:~/script/test> sed -n -e '3,5p'  3.txt | egrep 'cook'  #查找指定范围的行，在指定行的范围中查找cook
+cookab
+whwu@master:~/script/test> awk '(3 <= NR) && (NR <= 5) && /cook/{print FILENAME  ":" NR ":" $0 }' 3.txt   #FILENAME是awk的内置变量
+3.txt:5:cookab
+
+
+要在一个表格里，调换第二与第三栏
+whwu@master:~/script/test> cat 2.txt
+1       2       2
+2       4       3
+3       6       3
+4       7       4
+5       8       5
+6       1       1
+7       2       2
+8       5       4
+whwu@master:~/script/test> awk -F'\t' -v OFS='\t' '{ print $1, $3,$2 }' 2.txt >new2.txt
+whwu@master:~/script/test> cat new2.txt
+1       2       2
+2       3       4
+3       3       6
+4       4       7
+5       5       8
+6       1       1
+7       2       2
+8       4       5
+awk 'BEGIN { FS=OFS="\t" }{ print $1,$3,$2 }' 2.txt > new2.txt
+awk -F'\t' '{ print $1 "\t" $3 "\t" $2 }' 2.txt > new2.txt
+
+
+whwu@master:~/script/test> awk 'BEGIN { FS = "\t"; OFS = "&" }{ $1 = $1; print }' 2.txt  #要将各栏分隔字符由制表符转换成&
+1&2&2
+2&4&3
+3&6&3
+4&7&4
+5&8&5
+6&1&1
+7&2&2
+8&5&4
+
+
+删除已排序流里的重复行
+whwu@master:~/script/test> cat a.txt
+a
+w
+s
+d
+r
+e
+a
+s
+e
+r
+r
+whwu@master:~/script/test> sort a.txt | uniq
+a
+d
+e
+r
+s
+w
+whwu@master:~/script/test> sort a.txt | awk 'MAn != $0 { print }{ MAn = $0 }'  #变量MAn之前没有定义，因此默认值为0
+a
+d
+e
+r
+s
+w
+
+
+###在文件中查找超过一定长度的字符###
+whwu@master:~/script/test> cat 3.txt
+123a google
+cooc
+aba
+acddca
+cookab
+cookaab
+baidu 123xixi
+guogeo
+sohu apple
+Sohu
+i lovae shell 123 apple
+bok
+whwu@master:~/script/test> egrep -n '^.{10,}' 3.txt #-n 打印行号 超过10个字符的行
+1:123a google
+7:baidu 123xixi
+9:sohu apple
+11:i lovae shell 123 apple
+whwu@master:~/script/test> egrep -n '^.{20,}' 3.txt
+11:i lovae shell 123 apple
+whwu@master:~/script/test> awk 'length($0) > 20 { print FILENAME ":" FNR ":" $0 }' 3.txt
+3.txt:11:i lovae shell 123 apple
+
+
+
+###awk中if判断###
+whwu@master:~/script/test> echo "3" | awk '{if($1==1)print "A";else if($1==2)print "B"; else print "C"}'   #单行的if写法
+C
+whwu@master:~/script/test> cat 1.txt
+1
+2
+3
+2
+1
+whwu@master:~/script/test> cat awk_if_example.sh	#awk-if写入脚本
+#!/usr/bin/awk -f
+
+{
+        if($1==1)
+                print "A"
+        else if($1==2)
+                print "B"
+        else
+                print "C"
+}
+whwu@master:~/script/test> ./awk_if_example.sh 1.txt
+A
+B
+C
+B
+A
+
+
+
+whwu@master:~/script/test> var=4.57
+whwu@master:~/script/test> echo $var | awk '{print int($0)}'
+4
