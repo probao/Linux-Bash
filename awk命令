@@ -914,3 +914,92 @@ A
 whwu@master:~/script/test> var=4.57
 whwu@master:~/script/test> echo $var | awk '{print int($0)}'
 4
+
+
+
+######################
+####整数的因数分解####
+######################
+#!/bin/bash
+
+{
+        n=int($1)			       #下取整数
+        m=n=(n >= 2) ? n : 2                   #三目运算符
+        factors=""
+        for (k = 2; (m > 1) && (k^2 <= n); )   
+        {
+                if (int(m % k) != 0)
+                {
+                        k++
+                        continue
+                }
+                m/=k
+                factors = (factors == "") ? ("" k) : (factors " * " k)
+        }
+        if((1 < m) && (m < n))
+                factors = factors "*" m
+        print n,(factors == "") ? "is prime" :("=" factors)
+}
+whwu@master:~/script/test> cat 1.txt
+10
+11
+48
+1
+whwu@master:~/script/test> awk -f factorize.sh 1.txt
+10 =2*5
+11 is prime
+48 =2 * 2 * 2 * 2 * 3
+2 is prime
+
+
+getline命令
+getline为awk所提供的输入命令
+如果找到一条记录则getline返回1,如果到了文件结束(EOF)则返回0,如果错误则返回-1
+getline从整体上来说，应这么理解它的用法：
+当其左右无重定向符 | 或 < 时，getline作用于当前文件，读入当前文件的第一行给其
+后跟的变量var 或$0（无变量）；应该注意到，由于awk在处理getline之前已经读入了一行，所以getline得到的返回结果是隔行的。
+当其左右有重定向符 | 或 < 时，getline则作用于定向输入文件，由于该文件是刚打开，并没有被           
+awk读入一行，只是getline读入，那么getline返回的是该文件的第一行，而不是隔行。
+
+whwu@master:~/script> cat 2.txt
+1 2 6
+2 3 9
+3 4 12
+4 5 15
+whwu@master:~/script> awk 'BEGIN{getline;print $0}' 2.txt  #读取第一行
+1 2 6
+whwu@master:~/script> awk 'BEGIN{getline;getline;print $0}' 2.txt  #第一个getline先读取第一行，然后丢弃读取第二行
+2 3 9
+
+
+whwu@master:~/script> echo 1 | awk 'BEGIN{ print "what is the square root of 625?";getline answer;print "Your reply",answer " is", (answer == 25) ? "right." : "wrong." }'
+what is the square root of 625?
+Your reply 1 is wrong.
+whwu@master:~/script> echo 25 | awk 'BEGIN{ print "what is the square root of 625?";getline answer;print "Your reply",answer " is", (answer == 25) ? "right." : "wrong." }'
+what is the square root of 625?
+Your reply 25 is right.
+
+whwu@master:~/script/test> echo 1 | awk 'BEGIN{ "date" | getline now; close("date");print "The current  time is", now}'         
+The current  time is Mon May 23 22:47:40 PDT 2016
+
+
+######################
+####最大公分母算法####
+######################
+whwu@master:~/script/test> cat gcd.sh
+#!/bin/bash
+
+function gcd(x,y,r)
+{
+        x=int(x)
+        y=int(y)
+        print x,y
+        r=x%y
+        return (r==0) ? y : gcd(y,r)
+}
+
+{g=gcd($1,$2); print "gcd("$1","$2")=",g}
+whwu@master:~/script/test> echo 18 12 | awk -f gcd.sh
+18 12
+12 6
+gcd(18,12)= 6
