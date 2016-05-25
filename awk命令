@@ -1003,3 +1003,71 @@ whwu@master:~/script/test> echo 18 12 | awk -f gcd.sh
 18 12
 12 6
 gcd(18,12)= 6
+
+
+#############################
+####awk的字符串函数substr####
+#############################
+substr(s,p) 返回字符串s中从p开始的后缀部分
+substr(s,p,n) 返回字符串s中从p开始长度为n的后缀部分
+
+whwu@master:~/script> echo abcdefg | awk '{print substr($1,1,3)}'
+abc
+whwu@master:~/script> echo abcdefg | awk '{print substr($1,6)}'
+fg
+
+
+
+#############################
+########字母大小写转换#######
+#############################
+
+返回 String 参数指定的字符串，字符串中每个大写字符将更改为小写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。
+whwu@master:~/script> echo aBcD | awk '{print tolower($1)}'
+abcd
+
+返回 String 参数指定的字符串，字符串中每个小写字符将更改为大写。大写和小写的映射由当前语言环境的 LC_CTYPE 范畴定义。
+whwu@master:~/script> echo aBcD | awk '{print toupper($1)}'
+ABCD
+
+
+
+#############################
+########字母大小写转换#######
+#############################
+index( String1, String2 )
+在由 String1 参数指定的字符串（其中有出现 String2 指定的参数）中，
+返回位置，从 1 开始编号。如果 String2 参数不在 String1 参数中出现，则返回 0（零）。
+whwu@master:~/script> awk 'BEGIN{info="this is a test!";print index(info,"test")?"ok":"no found"}'
+ok
+whwu@master:~/script> awk 'BEGIN{info="this is a test!";print index(info,"df")?"ok":"no found"}'
+no found
+
+whwu@master:~/script> echo aBcD | awk '{print index($1,"c")}'                   3
+3
+whwu@master:~/script> echo aBcD | awk '{print index($1,"C")}'
+0
+
+
+
+whwu@master:~/script/test> cat rindex.sh   #查找最后个匹配的位置
+#!/bin/bash
+
+function rindex (string, find,   k,ns,nf)
+{
+        ns=length(string)
+        nf=length(find)
+        for (k=ns+1-nf;k>=1;k--)
+                if(substr(string, k, nf)==find)
+                        return k
+        return 0
+}
+
+{n=rindex($1,$2);print n}
+whwu@master:~/script/test> echo abcdaber ab | awk -f rindex.sh   
+5
+
+
+
+
+
