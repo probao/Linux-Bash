@@ -1068,6 +1068,28 @@ whwu@master:~/script/test> echo abcdaber ab | awk -f rindex.sh
 5
 
 
+whwu@master:~/script/test> cat aver_example.sh    #指定行加和，求平均值
+#!/usr/bin/awk -f
+
+{
+        a=a+$1
+        if( NR%3 == 0 )
+        {
+                aver=a/3
+                print aver
+                a=0
+        }
+}
+whwu@master:~/script/test> cat 4.txt
+1
+2
+3
+4
+5
+6
+whwu@master:~/script/test> ./aver_example.sh 4.txt
+2
+5
 
 
 
