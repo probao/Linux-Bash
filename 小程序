@@ -621,3 +621,27 @@ Files Total: 4
 Find Finished!
 
 
+########################################
+###########设置title的小脚本############
+########################################
+whwu@master:~/script/test> cat title.sh
+#!/bin/bash
+
+if ! grep "^#!" $1 &>/dev/null; then     # 查找$1中有无#！，并将标准输出指向/dev/null， 如果没有则返回1
+cat >> $1 << EOF                         # 文件重定向
+#!/bin/bash
+#Author:
+#Date & Time:`date +"%F %T"`             # 显示当前时间并格式化
+#Description:
+EOF
+fi
+vim +5 $1                                # 显示 $1
+
+whwu@master:~/script/test> date +'%F %T'
+2016-05-26 23:04:57
+
+
+
+
+
+
