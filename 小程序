@@ -642,6 +642,62 @@ whwu@master:~/script/test> date +'%F %T'
 
 
 
+########################################
+############比较三个数的大小############
+########################################
+whwu@master:~/script/test> cat cmp_3.sh
+#!/bin/bash
+#Author:
+#Date & Time:2016-05-26 23:37:06
+#Description: compare 3 numbers
+
+echo "please enter three numbers:"
+
+read -p "the first number:" n1
+read -p "the second number:" n2
+read -p "the third number:" n3
+
+let max=$n1
+
+if [ $n2 -gt $n1 ]
+then
+        let max=$n2
+fi
+
+if [ $n3 -gt $n2 ]
+then
+        let max=$n3
+fi
+
+echo "The max number is $max."
+whwu@master:~/script/test> ./cmp_3.sh
+please enter three numbers:
+the first number:23
+the second number:34
+the third number:12
+The max number is 34.
+
+
+########################################
+################偶数加和################
+########################################
+whwu@master:~/script/test> cat add_evennumber.sh
+#!/bin/bash
+#Author:
+#Date & Time:2016-05-26 23:46:40
+#Description: add even number
+
+sum=0
+for i in `seq 1 100`
+do
+        if [ $[$i%2] == 0 ]                 #变量前要有$ ,变量计算完赋值时前还要有$
+        then
+                sum=$(($sum+$i))
+        fi
+done
+echo "$sum"
+whwu@master:~/script/test> ./add_evennumber.sh
+2550
 
 
 
