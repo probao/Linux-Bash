@@ -1092,4 +1092,24 @@ whwu@master:~/script/test> ./aver_example.sh 4.txt
 5
 
 
+#########################
+#######字符串匹配########
+#########################
+match(字符串,正则表达式)
+ 内置变量RSTART表示匹配开始的位置，RLENGTH表示匹配的长度
+ 如果匹配到了，返回匹配到的开始位置，否则返回0
+
+whwu@master:~/script/test> awk 'BEGIN{start=match("Abc Ef Kig",/ [A-Z][a-z]+/);print RSTART, RLENGTH}'   # 匹配 空格EF
+4 3
+whwu@master:~/script/test> awk 'BEGIN{start=match("Abc Ef Kig",/ [A-Z][a-z]+ /);print RSTART, RLENGTH}'  # 匹配 空格EF空格
+4 4
+whwu@master:~/script/test> awk 'BEGIN{start=match("Abc Ef Kig",/[A-Z][a-z]+ /);print RSTART, RLENGTH}'   # 匹配Abc空格
+1 4
+
+whwu@master:~/script/test> echo "foooobazbarrrr" | awk '{match($0, /(fo+).+(bar*)/, arr);print arr[1],arr[2]}'
+foooo barrrr
+
+
+
+
 
