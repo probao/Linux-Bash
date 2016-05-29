@@ -1110,6 +1110,50 @@ whwu@master:~/script/test> echo "foooobazbarrrr" | awk '{match($0, /(fo+).+(bar*
 foooo barrrr
 
 
+#########################
+#######字符串分隔########
+#########################
+
+一、split 初始化和类型强制 
+       awk的内建函数split允许你把一个字符串分隔为单词并存储在数组中。你可以自己定义域分隔符或者使用现在FS(域分隔符)的值。
+格式：
+
+   split (string, array, field separator)
+    split (string, array)  -->如果第三个参数没有提供，awk就默认使用当前FS值。
+
+
+whwu@master:~> date +'%F %T'
+2016-05-28 23:18:03
+whwu@master:~> time=`date +'%F %T' | awk '{print $2}'`
+whwu@master:~> echo $time
+23:19:10
+whwu@master:~> out=`echo $time | awk '{split($0,a,":");print a[1],a[2],a[3]}'`
+whwu@master:~> echo $out
+23 19 10
+
+whwu@master:~/test> awk '{ split($2,a,"-") ;if(a[2]==01){b[$1]+=$4}}END{for(i in b) print i,b[i]}' test.txt
+vivi 42800
+Tom 32500
+John 94500
+
+
+whwu@master:~/script/test> cat split_test.sh
+#!/bin/bash
+
+{
+        print "\nField separator=FS=\"" FS "\""
+        n = split($0,parts)
+        for (k=1; k<=n; k++)
+                print ""k"="parts[k]""
+}
+whwu@master:~/script/test> awk -f split_test.sh 1.txt
+
+Field separator=FS=" "
+1=a
+2=b
+3=c
+4=d
+
 
 
 
