@@ -99,3 +99,57 @@ whwu@master:~/script/test>
 ##############################################
 
 179-191没看懂
+
+
+
+
+############ls命令##########
+whwu@master:~/script/test> ls
+1.txt  3.txt  add_evennumber.sh  ca-na.data  new.dat        split_test.sh
+2.txt  4.txt  a.txt              cmp_3.sh    shell_example  title.sh
+whwu@master:~/script/test> ls -l
+total 56
+-rw-rw-r-- 1 whwu whwu     8 May 28 23:58 1.txt
+-rw-rw-r-- 1 whwu whwu    48 May 22 21:28 2.txt
+-rw-rw-r-- 1 whwu whwu   108 May 22 21:27 3.txt
+-rw-rw-r-- 1 whwu whwu    12 May 26 00:10 4.txt
+-rwxrwxr-x 1 whwu whwu   182 May 26 23:55 add_evennumber.sh
+-rw-rw-r-- 1 whwu whwu    22 May 22 22:11 a.txt
+-rw-r--r-- 1 whwu whwu 11096 May 26 00:44 ca-na.data
+-rwxrwxr-x 1 whwu whwu   345 May 26 23:41 cmp_3.sh
+-rw-rw-r-- 1 whwu whwu    68 May 26 23:00 new.dat
+drwxrwxr-x 2 whwu whwu  4096 May 26 23:14 shell_example
+-rwxrwxr-x 1 whwu whwu   126 May 29 00:02 split_test.sh
+-rwxrwxr-x 1 whwu whwu   148 May 26 23:36 title.sh
+
+ls -l（这个参数是字母L的小写，不是数字1）　　    
+这个命令可以使用长格式显示文件内容，如果需要察看更详细的文件资料，就要用到ls -l这个指令。
+例如我在某个目录下键入ls -l可能会显示如下信息（最上面两行是我自己加的）：　　
+位置1 2 3 4 5 6 7　　文件属性 文件数 拥有者 所属的group 文件大小 建档日期 文件名搜索　　
+drwx------ 2 Guest users 1024 Nov 21 21:05 Mail　　-rwx--x--x 1 root root 89080 Nov 7 22:41 tar*　　
+-rwxr-xr-x 1 root bin 5013 Aug 15 9:32 uname*　　lrwxrwxrwx 1 root root 4 Nov 24 19:30 zcat->gzip　　
+-rwxr-xr-x 1 root bin 308364 Nov 29 7:43 zsh*　　-rwsr-x--- 1 root bin 9853 Aug 15 5:46 su*　　
+下面，我为大家解释一下这些显示内容的意义。　　    
+第一个栏位，表示文件的属性。Linux的文件基本上分为三个属性：可读（r），可写（w），可执行（x）。但是这里有十个格子可以添（具体程序实现时，实际上是十个bit位）。
+第一个小格是特殊表示格，表示目录或连结文件等等，d表示目录，例如drwx------;l表示连结文件，如lrwxrwxrwx;
+如果是以一横“-”表示，则表示这是文件。其余剩下的格子就以每3格为一个单位。
+因为Linux是多用户多任务系统，所以一个文件可能同时被许多人使用，所以我们一定要设好每个文件的权限，
+其文件的权限位置排列顺序是（以-rwxr-xr-x为例）：rwx(Owner)r-x(Group)r-x(Other)这个例子表示的权限是：使用者自己可读，可写，可执行；同一组的用户可读，不可写，可执行；其它用户可读，不可写，可执行。
+另外，有一些程序属性的执行部分不是X,而是S,这表示执行这个程序的使用者，临时可以有和拥有者一样权力的身份来执行该程序。一般出现在系统管理之类的指令或程序，
+让使用者执行时，拥有root身份。　　  
+第二个栏位，表示文件个数。如果是文件的话，那这个数目自然是1了，如果是目录的话，那它的数目就是该目录中的文件个数了。　　   
+第三个栏位，表示该文件或目录的拥有者。若使用者目前处于自己的Home,那这一栏大概都是它的账号名称。　　    
+第四个栏位，表示所属的组（group）。每一个使用者都可以拥有一个以上的组，不过大部分的使用者应该都只属于一个组，只有当系统管理员希望给予某使用者特殊权限时，才可能会给他另一个组。　　    
+第五栏位，表示文件大小。文件大小用byte来表示，而空目录一般都是1024byte，你当然可以用其它参数使文件显示的单位不同，如使用ls –k就是用kb莱显示一个文件的大小单位，不过一般我们还是以byte为主。　　   
+第六个栏位，表示创建日期。以“月，日，时间”的格式表示，如Aug 15 5:46表示8月15日早上5:46分。　　    
+第七个栏位，表示文件名。我们可以用ls –a显示隐藏的文件名。
+
+
+
+
+############touch命令##########
+cat /dev/null > some-file  复制空文件到some-file
+printf "" > some-file 打印空字符串到some-file
+cat /dev/null >> some-file 附加空文件到some-file
+printf "" >> some-file 附加空字符串到some-file
+touch >> some-file 更新some-file的时间戳
