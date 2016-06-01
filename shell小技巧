@@ -153,3 +153,28 @@ printf "" > some-file 打印空字符串到some-file
 cat /dev/null >> some-file 附加空文件到some-file
 printf "" >> some-file 附加空字符串到some-file
 touch >> some-file 更新some-file的时间戳
+
+
+############比较文件##########
+cmp命令
+whwu@master:~/script/test> cmp 1.txt 1a.txt  #没有任何输出，表示两个文件一致
+whwu@master:~/script/test> cmp 1.txt 2.txt   #输出结果表示第一个不同之处的位置
+1.txt 2.txt differ: byte 1, line 1
+
+
+whwu@master:~/script/test> cmp -s  1.txt 2.txt   
+whwu@master:~/script/test> echo $?               #返回值为1，表示两个文件不一致
+1
+whwu@master:~/script/test> cmp -s  1.txt 1a.txt  
+whwu@master:~/script/test> echo $?               #返回值为0.表示两个文件一致
+0
+
+
+diff命令
+whwu@master:~/script/test> diff 1.txt 1a.txt   #1a多了一空行
+1a2
+>
+whwu@master:~/script/test> diff 1.txt 1a.txt   #1a在 第二，三行多了a和s 1a2,3中a是add的意思
+1a2,3
+> a
+> s
