@@ -8,9 +8,10 @@ a 1 2 3 3 0.666667
 b 2 3 4 5 0.75
 c 5 6 7 11 0.857143
 
+
 awk命令
 awk脚本的机构基本如下所示：
-awk ' BEGIN{ print "start" } pattern {command} END {print "end" } file
+awk ' BEGIN{ print "start" } pattern {command} END {print "end" }' file
 这三个模块都是可选的，最重要的部分就是pattern语句块中的通用命令。这个语句块同样是可选的。
 如果不提供该语句块，则默认执行{ print }，即打印每一个读取到的行。awk对于读取的每一行，都
 会执行这个语句块。这就像一个用来读取行的while循环，在循环体中提供了相应的语句。每读取一行
