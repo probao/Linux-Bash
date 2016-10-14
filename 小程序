@@ -701,3 +701,48 @@ whwu@master:~/script/test> ./add_evennumber.sh
 
 
 
+#####################################
+#############DOSCAR文本处理###########
+#####################################
+第一组数不变，其余组数去掉第一列
+[hlliu@server script]$ cat split_dos4DOSCAR.sh 
+#!/bin/bash
+
+grep -n "35.00000000" DOSCAR | awk 'BEGIN{FS = ":"} {print $1}' > temp1
+
+let total_line=$(wc -l temp1 | cut -c1-2)
+let current_line=1
+
+while [ "$current_line" -lt "$total_line" ]
+do
+        let next_line=current_line+1
+        let first=$(awk -v n=$current_line '{if(NR==n) print $1}' temp1)	# 外部参数传递至awk脚本中要用命令-v
+        let second=$(awk -v n=$next_line '{if(NR==n) print $1}' temp1)
+        let first=first+1
+        let second=second-1
+        sed -n "$first, $second p" DOSCAR > $current_line.txt
+        if [ $current_line == 1 ]
+        then
+                cp $current_line.txt $current_line.data
+        else
+                awk '{for(i=2;i<=NF;++i)printf $i "\t";printf "\n"}' $current_line.txt > $current_line.data	# 打印每行的非第一列
+        fi
+        let current_line=current_line+1
+done
+
+let second=second+2
+sed -n "$second, $ p" DOSCAR > $current_line.txt # 打印从指定行到最后一行
+awk '{for(i=2;i<=NF;++i)printf $i "\t"; printf "\n"}' $current_line.txt > $current_line.data
+
+rm temp1
+rm *.txt 
+
+
+
+
+
+
+
+
+
+
