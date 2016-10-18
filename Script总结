@@ -704,19 +704,19 @@ whwu@master:~/script/test> ./add_evennumber.sh
 #####################################
 #############DOSCAR文本处理###########
 #####################################
-第一组数不变，其余组数去掉第一列
-[hlliu@server script]$ cat split_dos4DOSCAR.sh 
 #!/bin/bash
+# 将DOSCAR中文件不同部分取出并分别处理，除第一组外，其余各组中每行的
+# 数字相加
 
-grep -n "35.00000000" DOSCAR | awk 'BEGIN{FS = ":"} {print $1}' > temp1
+grep -n "35.00000000" DOSCAR | awk 'BEGIN{FS = ":"} {print $1}' > temp1	# 以35.000位分界符，将文件中含35.000的行数打印至temp1
 
-let total_line=$(wc -l temp1 | cut -c1-2)
+let total_line=$(wc -l temp1 | cut -c1-2)	# temp1中总共的行数赋值给total_line
 let current_line=1
 
-while [ "$current_line" -lt "$total_line" ]
+while [ "$current_line" -lt "$total_line" ]	# 如果current_line比total_line小，则执行while循环
 do
         let next_line=current_line+1
-        let first=$(awk -v n=$current_line '{if(NR==n) print $1}' temp1)	# 外部参数传递至awk脚本中要用命令-v
+        let first=$(awk -v n=$current_line '{if(NR==n) print $1}' temp1)	# 将参数传递至awk语句内
         let second=$(awk -v n=$next_line '{if(NR==n) print $1}' temp1)
         let first=first+1
         let second=second-1
@@ -725,21 +725,25 @@ do
         then
                 cp $current_line.txt $current_line.data
         else
-                awk '{for(i=2;i<=NF;++i)printf $i "\t";printf "\n"}' $current_line.txt > $current_line.data	# 打印每行的非第一列
+                awk '{for(i=2;i<=NF;++i)printf $i "\t";printf "\n"}' $current_line.txt > $current_line.tmp
+                awk '{print $1+$2+$3}' $current_line.tmp > $current_line.data
         fi
         let current_line=current_line+1
 done
 
 let second=second+2
-sed -n "$second, $ p" DOSCAR > $current_line.txt # 打印从指定行到最后一行
-awk '{for(i=2;i<=NF;++i)printf $i "\t"; printf "\n"}' $current_line.txt > $current_line.data
+sed -n "$second, $ p" DOSCAR > $current_line.txt
+awk '{for(i=2;i<=NF;++i)printf $i "\t"; printf "\n"}' $current_line.txt > $current_line.tmp
+awk '{print $1+$2+$3}' $current_line.tmp > $current_line.data
 
 rm temp1
-rm *.txt 
+rm *.txt
+rm *.tmp 
 
 
-
-
+#####################################
+#############DOSCAR文本处理###########
+#####################################
 
 
 
