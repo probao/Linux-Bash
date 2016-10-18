@@ -741,9 +741,42 @@ rm *.txt
 rm *.tmp 
 
 
-#####################################
-#############DOSCAR文本处理###########
-#####################################
+##################################
+#####将多个文件中的不同列相加#######
+##################################
+[hlliu@server script]$ cat test1.txt 
+1
+2
+3
+4
+5
+[hlliu@server script]$ cat test2.txt 
+1
+2
+3
+4
+5
+[hlliu@server script]$ cat post-calc.txt 
+2
+4
+6
+8
+10
+[hlliu@server script]$ cat calculate.sh 
+#!/bin/bash
+
+if [ $# -eq 0 ];then	# 如果参数个数为0，则报出错误提示信息
+        echo "at least two files"
+else
+        paste $* > temp.txt	# 将所有文件中的列，paste至一个文件中
+        awk '{x=0;for(i=1;i<=NF;i++){x+=$i};print x}' temp.txt > post-calc.txt	# 每一行求和
+
+        rm temp.txt
+fi
+
+
+
+
 
 
 
