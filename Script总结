@@ -858,6 +858,87 @@ f1.close()			# 关闭文件
 224 result.txt
 
 
+##########每个点的电荷密度差计算##########
+
+[hlliu@server charge_test]$ cat delta_density_point.py 
+import sys
+import numpy as np
+
+num_arg = len(sys.argv)
+bulk_point=[]
+
+for i in range(1, num_arg):
+        with open(sys.argv[i]) as f:
+                number=map(float, f.read().split())
+                bulk_point.append(number)
+
+bulk_point_array = np.array(bulk_point)
+result = (bulk_point_array[0]-sum(bulk_point_array[1:])).reshape(224,50176)
+
+f1=open('delta_density_all.txt', 'w')
+np.savetxt(f1, result)
+f1.close()
+
+[hlliu@server charge_test]$ wc -l delta_density_all.txt 
+224 delta_density_all.txt
+
+
+
+
+[hlliu@server test4delta]$ cat delta_charge_v2.py	 # python数据处理脚本版本2
+import sys
+import numpy as np
+
+# paremeters
+num_axis=int(sys.argv[1])
+num_plane=int(sys.argv[1])**2
+num_bulk=int(sys.argv[1])**3
+num_file=int(sys.argv[2])
+bulk = []
+
+
+#generate array for calculation
+for i in range(3, 3+num_file):
+        with open(sys.argv[i]) as f:
+                number=map(float, f.read().split())
+                bulk.append(number)
+
+bulk_array=np.array(bulk)
+
+# calculate the plane-average difference of charge density
+result1=bulk_array[0]-sum(bulk_array[1:])
+
+start=0
+final=num_plane
+result1_list=[]
+while final <= num_bulk:
+        result1_list.append(np.sum(result1[start:final])/num_plane)
+        start=start+num_plane
+        final=final+num_plane
+
+f1=open('plane_average.txt', 'w')
+for i, j in enumerate(result1_list):
+        print >> f1,i,j
+f1.close()
+
+
+# calculate the difference of charge density for all points in the bulk
+result2=result1.reshape(num_plane, num_axis)
+f2=open('delta_density_all.txt', 'w')
+np.savetxt(f2, result2)
+f2.close()
+
+[hlliu@server test4delta]$ ls
+CHGCARA  CHGCARAB  CHGCARB  delta_charge.sh  delta_charge_v2.py  delta_density_all.txt  plane_average.txt
+[hlliu@server test4delta]$ wc -l delta_density_all.txt 
+50176 delta_density_all.txt
+[hlliu@server test4delta]$ wc -l plane_average.txt 
+224 plane_average.txt
+
+
+
+
+
 
 
 
