@@ -936,6 +936,37 @@ CHGCARA  CHGCARAB  CHGCARB  delta_charge.sh  delta_charge_v2.py  delta_density_a
 224 plane_average.txt
 
 
+###电子密度求和###
+[hlliu@server script]$ cat calculate_v2.sh
+#!/bin/bash
+
+for arg in "$@"		# $@ 将命令行中的参数独立地保存
+do
+        awk '{for(i=2;i<=NF;++i)printf $i "\t"; printf "\n"}' $arg > $arg.tmp	# 打印非第一列
+done
+
+paste *.tmp > calc.data
+
+awk '{x=0;for(i=1;i<=NF;i++){x+=$i};print x}' calc.data > post-calc.txt	 # 求和
+rm *.tmp
+
+[hlliu@server script]$ cat a.data
+1 2 3
+2 2 2
+3 3 3
+4 5 6
+[hlliu@server script]$ cat b.data
+10 100
+10 100
+10 100
+10 100
+[hlliu@server script]$ ./calculate_v2.sh a.data b.data
+105
+104
+106
+111
+
+
 
 
 
