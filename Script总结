@@ -1,4 +1,6 @@
+#############################################
 ##############计算1+2+...+100################
+#############################################
 #!/bin/bash
 #sum1.sh
 
@@ -12,8 +14,9 @@ done
 
 echo "$total"
 
-
+##################################################################################
 ########范例：有一组数据，存有某村所有家庭的人数和月总收入，找出人均月收入最高家庭#######
+##################################################################################
 #!/bin/bash
 # gettopfamily.sh
 
@@ -52,7 +55,9 @@ else
 END { print(col1" "col2" "col3); }
 
 
+###################################
 ############NR小例子###############
+##################################
 whwu@master:~/script> echo -e "A B C\nD E F\nG H I" | awk 'NR==1 {print $1}' # Number 0f Row（NR）
 A
 
@@ -1009,6 +1014,25 @@ whwu@master:~/script> awk '{if($1=="a") printf ""$0" 1\n"; else if($1=="b")  pri
 a bcd 1
 a edf 1
 b wer 2
+
+whwu@master:~/script> cat test1
+#p b3lyp/aug-cc-pvdz
+
+a bcd
+a edf
+b wer
+c ddf
+
+whwu@master:~/script> awk '{if($1=="a") printf ""$0" 1\n"; else if($1=="b"||$1=="c")  printf ""$0" 2\n"; else printf ""$0"\n"}' test1 # awk-if中的逻辑或    
+#p b3lyp/aug-cc-pvdz
+
+a bcd 1
+a edf 1
+b wer 2
+c ddf 2
+
+
+
 
 
 
