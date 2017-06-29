@@ -1,6 +1,5 @@
 # Bash Script Summary
-A Computational Chemistry PhD
-
-an amateur about computational chemistry，lammps，shell.... 
+I am a computational chemistry PhD candidate.
+I upload some `Bash script summary` from my own laptop. 
 
 
