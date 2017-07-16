@@ -1031,9 +1031,9 @@ a edf 1
 b wer 2
 c ddf 2
 
-###########################################
-######BSSE file generator version 1########
-###########################################
+######################################################
+######BSSE file generator version 1 summarized########
+######################################################
 #!/bin/bash
 # This script writtern by benwu(ecustwwh@163.com) can generate bsse file.
 # It is the origin version(v1) which is not very good and just focus on Zhou Li's system as well as simple dimer.
